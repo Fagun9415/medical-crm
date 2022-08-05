@@ -94,8 +94,8 @@
                                             <tbody>
                                             <?php foreach ($details as $key => $value) { ?>
                                                 <tr>
-                                                    <td><?php echo $key+1; ?></td>
-                                                    <td><?php echo $value->labTestName; ?></td>
+                                                    <td><input name="encounterLabId[]" class="me-2" type='checkbox' value ="<?php echo $value->id.'_'.$value->labTestName ; ?>"><?php echo $key+1; ?></td>
+                                                   <td><?php echo $value->labTestName; ?></td>
                                                 </tr>
                                             <?php } ?>    
                                             </tbody>
@@ -211,14 +211,13 @@
                     success: function(data)
                     {   
                         $(".ajax-load1").hide();
-                        console.log(data);
                         var res = JSON.parse(data);
                         status = res.status;
                         message = res.message;
-
+                        
                         if(status == "success")
                         {   
-                            location.href = "<?php echo base_url('patient/Order/lab_order_alert') ?>";   
+                            location.href = "<?php echo base_url('patient/Order/onprocess_lab_order_alert') ?>";   
                         }
                         else if(status=="unsuccess")
                         {   
@@ -237,4 +236,4 @@
 
 
         });
-    </script>         
+    </script>

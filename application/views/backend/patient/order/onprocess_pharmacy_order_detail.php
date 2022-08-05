@@ -1,5 +1,5 @@
 <?php 
-    $order = $details->pharmacyOrder;
+    $order = $details->pharmacyorder;
     $pharmacy = $details->pharmacy;
     $med = $details->medicines;
 
@@ -32,14 +32,16 @@
                                     <hr class="mt-0">
                                     <div class="col-12">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="delivery" value="delivery" <?php if ($order->pharmacyOrderMode == "delivery") {
-                                            echo "checked"; } else{} ?>>
-                                            <label class="form-check-label" for="delivery">Delivery</label>
+                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="delivery" value="delivery" <?php if ($order->pharmacyOrderMode == 'delivery') {
+                                                echo "checked";
+                                            } else{} ?> >
+                                            <label class="form-check-label" for="delivery">Home Visit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="pickup" value="pickup" <?php if ($order->pharmacyOrderMode == "pickup") {
-                                            echo "checked"; } else{} ?>>
-                                            <label class="form-check-label" for="pickup">Pick-Up</label>
+                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="pickup" value="pickup" <?php if ($order->pharmacyOrderMode == 'pickup') {
+                                                echo "checked";
+                                            } else{} ?>>
+                                            <label class="form-check-label" for="pickup">Pickup</label>
                                         </div>
                                     </div>
                                 </div>

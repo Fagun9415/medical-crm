@@ -129,3 +129,120 @@
                 </div>
             </div>
         </div>
+<script src="<?php echo base_url('backend/assets/js/jquery-3.6.0.min.js'); ?>"></script>
+    <script>
+        $('.filterme').keypress(function(eve) {
+        if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0)) {
+        eve.preventDefault();
+        }
+
+        // this part is when left part of number is deleted and leaves a . in the leftmost position. For example, 33.25, then 33 is deleted
+        $('.filterme').keyup(function(eve) {
+        if ($(this).val().indexOf('.') == 0) {
+        $(this).val($(this).val().substring(1));
+        }
+        });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('input[type=radio][name=labOrderMode]').change(function() {
+                if (this.value == 'homeVisit') {
+                    $("#adl1").css('display', 'block');
+                    $("#adl2").css('display', 'block');
+                    $("#lmark").css('display', 'block');
+                    $("#orderAddressLine1").attr('required', 'required');
+                    $("#orderAddressLine2").attr('required', 'required');
+                    $("#landmark").attr('required', 'required');
+                }
+                else if (this.value == 'labVisit') {
+                    $("#adl1").css('display', 'none');
+                    $("#adl2").css('display', 'none');
+                    $("#lmark").css('display', 'none');
+                    $("#orderAddressLine1").removeAttr("required");
+                    $("#orderAddressLine2").removeAttr("required");
+                    $("#landmark").removeAttr("required");
+                    $("#orderAddressLine1").val('');
+                    $("#orderAddressLine2").val('');
+                    $("#landmark").val('');
+                }
+            });
+
+            $(document).on('click','#search',function(){
+
+                var pincode = $('#pincode').val();
+
+                $.ajax({
+                  url:"<?php echo base_url('patient/Order/fetch_nearby_labs') ?>",
+                  method:"POST",
+                  data:{pincode:pincode},
+                  success:function(data){               
+                        
+                     var res = JSON.parse(data);
+                    
+                    addresslist = res.address_list;
+                    
+                      if(addresslist=='no')
+                      {   
+                          $('#addressempty').show();
+                          $('#address_list').html('');
+                      }
+                      else
+                      {   
+                          $('#addressempty').hide();
+                          $('#address_list').html(addresslist);
+                      } 
+
+                   }
+                
+                });
+
+                
+            });
+
+            var frm = $('#orderform');
+            frm.submit(function(e){
+                e.preventDefault();
+
+
+                $(".ajax-load1").show();
+
+                var formData = new FormData($(this)[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url().'patient/Order/add_save_lab_order'?>',
+                    data: formData,
+                    async: true,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data)
+                    {   
+                        $(".ajax-load1").hide();
+                        var res = JSON.parse(data);
+                        status = res.status;
+                        message = res.message;
+
+                        if(status == "success")
+                        {   
+                            location.href = "<?php echo base_url('patient/Order/lab_order_alert') ?>";   
+                        }
+                        else if(status=="unsuccess")
+                        {   
+                            $('#alert_message').html('<div class="text-center alert alert-danger">'+message+'</div>');
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                });
+                 setInterval(function(){
+                      $('#alert_message').html('');
+                  }, 2000);
+            });
+
+
+        });
+    </script>         

@@ -106,7 +106,6 @@ function methodPatch($method,$header,$parameters){
 function methodDelete($method,$header){
 	$port = "7081";
 	$base_url = "http://174.138.21.74/";
-	
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
@@ -173,7 +172,6 @@ function methodGetwithparm($method,$header,$parameters){
 	
 	$port = "7081";
 	$base_url = "http://174.138.21.74/";
-	
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
@@ -209,7 +207,6 @@ function methodDeletewithparm($method,$header,$parameters){
 	$port = "7081";
 	$base_url = "http://174.138.21.74/";
 	
-
 
 	$curl = curl_init();
 
