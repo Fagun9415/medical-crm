@@ -261,7 +261,7 @@ class Order  extends CI_Controller {
                     }
                     elseif ($labOrder->paymentStatus== 'processing' )
                     {
-                    	$pstatus = 'processing &nbsp;&nbsp; <button type="button" class="btn btn-primary">Pay Now</button>';           
+                    	$pstatus = 'Processing &nbsp;&nbsp; <button type="button" class="btn btn-primary">Pay Now</button>';           
                     }else
                     {
                         $pstatus = 'Completed';
@@ -1222,7 +1222,7 @@ class Order  extends CI_Controller {
                     <span class="user-name">'.ucwords($lab->name).'</span><br>
                     <span>('.$lab->labPhoneCode1.') '.$lab->labPhoneNo1.' </span></a>';
 
-                    $pstatus = ucwords($laborder->orderStatus);
+                    $pstatus = ucwords($labOrder->orderStatus);
                     
                     $action = '<a href=" '.base_url('patient/Order/lab_order_detail/').$labOrder_id.'" class="btn btn-dark">View</a>'; 
 
