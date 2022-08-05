@@ -3,7 +3,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="setting-info profile-info">
-                            <h5 class="mb-1 d-flex"><div class="col-6">Past Pharmacy Order of <b><?php echo ucwords($user->name).'('.ucwords($user->role).')'; ?></b></div></h5>
+                            <h5 class="mb-1 d-flex"><div class="col-6">Pharmacy Order Alerts of <b><?php echo ucwords($user->name).'('.ucwords($user->role).')'; ?></b></div></h5>
                             <br>    
                             <hr class="mt-0">
                             <div class="row">
@@ -14,11 +14,12 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Doctor Info</th>
-                                                    <th>No of Reports</th>
+                                                    <th>No of Medicines</th>
                                                     <th>Pharmacy Info</th>
                                                     <th>Date</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>Order Status</th>
+                                                    <th>Order Payment Status</th>
+                                                    <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -52,13 +53,11 @@
 
       active_patient_data();
 
-
       function active_patient_data()
       {
-            
         $('#patient-table').DataTable( {
                 "ajax" : {
-                    url:"<?php echo base_url('patient/Order/fetch_past_pharmacy_order'); ?>"
+                    url:"<?php echo base_url('patient/Order/fetch_onprocess_pharmacy_order_alert'); ?>"
                     
                 },
                 "oLanguage": {

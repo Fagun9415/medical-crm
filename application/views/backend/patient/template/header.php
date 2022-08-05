@@ -182,6 +182,12 @@ $user = $this->session->userdata('logged_in_patient')['profile'];
                         <li class="<?php if (($url=='Order') && ($url2=='pharmacy_order_alert' || $url2=='add_pharmacy_order' || $url2=='pharmacy_order_alert_detail')) { echo "active";} ?>">
                             <a href="<?php echo base_url('patient/Order/pharmacy_order_alert'); ?>"><i class="feather-package"></i> <span>Pharmacy Order Alert</span></a>
                         </li>
+                        <li class="<?php if (($url=='Order') && ($url2=='onprocess_lab_order_alert' || $url2=='onprocess_lab_order_detail' )) { echo "active";} ?>">
+                            <a href="<?php echo base_url('patient/Order/onprocess_lab_order_alert'); ?>"><i class="feather-user-plus"></i> <span>OnProcess Lab Order</span></a>
+                        </li>
+                        <li class="<?php if (($url=='Order') && ($url2=='onprocess_pharmacy_order_alert' || $url2=='onprocess_pharmacy_order_detail' )) { echo "active";} ?>">
+                            <a href="<?php echo base_url('patient/Order/onprocess_pharmacy_order_alert'); ?>"><i class="feather-package"></i> <span>OnProcess Pharmacy Order</span></a>
+                        </li>
                         <li class="<?php if (($url=='Order') && ($url2=='active_doctor_order' || $url2=='doctor_encounter_detail')) { echo "active";} ?>">
                             <a href="<?php echo base_url('patient/Order/active_doctor_order'); ?>"><i class="feather-calendar"></i>
                                 <span>Active Doctor Orders</span></a>

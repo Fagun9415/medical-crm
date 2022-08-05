@@ -13,9 +13,9 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Doctor</th>
+                                                    <th>Doctor Info</th>
                                                     <th>No of Reports</th>
-                                                    <th>Contact Number</th>
+                                                    <th>Lab Info</th>
                                                     <th>Date</th>
                                                     <th>Status</th>
                                                     <th>Action</th>

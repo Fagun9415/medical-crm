@@ -56,7 +56,7 @@ $med = $details->medicines;
                                 <div class="col-md-4 col-sm-12">
                                     <div class="form-group">
                                         <label>Pincode <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="pincode"  id="pincode" required >
+                                        <input type="number" class="form-control" name="pincode"  id="pincode" required >
                                     </div>
                                 </div>
 
@@ -103,18 +103,17 @@ $med = $details->medicines;
                                         <tbody>
                                         <?php foreach ($med as $key => $value) {?>
                                             <tr>
-                                                <input type="hidden" name="encounterMedicinesId[]" value="<?php echo $value->id; ?>" >
-                                                <td><?php echo $key+1; ?></td>
-                                                <td><input type="hidden" name="drugName[]" value="<?php echo $value->drugName; ?>" ><?php echo $value->drugName; ?></td>
-                                                <td><input type="hidden" name="morning[]" value="<?php echo $value->morning; ?>" ><?php echo $value->morning; ?></td>
-                                                <td><input type="hidden" name="afternoon[]" value="<?php echo $value->afternoon; ?>" ><?php echo $value->afternoon; ?></td>
-                                                <td><input type="hidden" name="evening[]" value="<?php echo $value->evening; ?>" ><?php echo $value->evening; ?></td>
-                                                <td><input type="hidden" name="night[]" value="<?php echo $value->night; ?>" ><?php echo $value->night; ?></td>
-                                                <td><input type="hidden" name="comment[]" value="<?php echo $value->comment; ?>" ><?php echo $value->comment; ?></td>
-                                                <td><input type="hidden" name="noOfDays[]" value="<?php echo $value->noOfDays; ?>" ><?php echo $value->noOfDays; ?></td>
+                                                <td><input type=checkbox class="me-2" name ="encounterMedicinesId[]" value="<?php echo $value->id; ?>"><?php echo $key+1; ?></td>
+                                                <td><input type="hidden" name="drugName[<?php echo $value->id ; ?>]" value="<?php echo $value->drugName; ?>" ><?php echo $value->drugName; ?></td>
+                                                <td><input type="hidden" name="morning[<?php echo $value->id ; ?>]" value="<?php echo $value->morning; ?>" ><?php echo $value->morning; ?></td>
+                                                <td><input type="hidden" name="afternoon[<?php echo $value->id ; ?>]" value="<?php echo $value->afternoon; ?>" ><?php echo $value->afternoon; ?></td>
+                                                <td><input type="hidden" name="evening[<?php echo $value->id ; ?>]" value="<?php echo $value->evening; ?>" ><?php echo $value->evening; ?></td>
+                                                <td><input type="hidden" name="night[<?php echo $value->id ; ?>]" value="<?php echo $value->night; ?>" ><?php echo $value->night; ?></td>
+                                                <td><input type="hidden" name="comment[<?php echo $value->id ; ?>]" value="<?php echo $value->comment; ?>" ><?php echo $value->comment; ?></td>
+                                                <td><input type="hidden" name="noOfDays[<?php echo $value->id ; ?>]" value="<?php echo $value->noOfDays; ?>" ><?php echo $value->noOfDays; ?></td>
                                                 <td>
                                                     <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" name="qty[]">
+                                                        <input type="number" class="form-control floating" name="qty[<?php echo $value->id;?>]">
                                                         <label class="focus-label">Quantity (strip/tube/bottle)<span class="text-danger"></span></label>
                                                     </div>
                                                 </td>
@@ -237,7 +236,7 @@ $med = $details->medicines;
 
                         if(status == "success")
                         {   
-                            location.href = "<?php echo base_url('patient/Order/pharmacy_order_alert') ?>";   
+                            location.href = "<?php echo base_url('patient/Order/onprocess_pharmacy_order_alert') ?>";   
                         }
                         else if(status=="unsuccess")
                         {   
@@ -253,7 +252,5 @@ $med = $details->medicines;
                       $('#alert_message').html('');
                   }, 2000);
             });
-
-
         });
     </script>        

@@ -64,7 +64,7 @@ class Order  extends CI_Controller {
 			$parameters = array('patientId' => $patient_id);
 		    $json_param = json_encode($parameters);
 		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-		    $result = methodPost("api/patient/getLabOrdersList",$header,$json_param);
+		    $result = methodPost("api/patient/getPrescribeLabOrdersList",$header,$json_param);
 		    
 		    $result_array = json_decode($result);
 		    $order = $result_array->data;
@@ -146,7 +146,7 @@ class Order  extends CI_Controller {
                     $sub_array[] = $row->totalReports; 
                     $sub_array[] = '(+'.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo;
                     $sub_array[] = date('d M Y',strtotime($encounter->encounterDate));
-                    $sub_array[] = $rstatus.'<br><br>'.$payment_status;
+                    $sub_array[] = $rstatus.$payment_status;
                     $sub_array[] = $pstatus;
                     $sub_array[] = $action;
 
@@ -173,13 +173,188 @@ class Order  extends CI_Controller {
         }	
 	}
 
-    public function active_lab_order_detail($encounter_id)
+    public function onprocess_lab_order_alert()
+	{	
+		if ($this->session->userdata('logged_in_patient')) 
+		{	
+			$token = $this->session->userdata('logged_in_patient')['token'];	
+			$patient_id = $this->session->userdata('logged_in_patient')['patient_id'];
+
+			$parameters = array('patientId' => $patient_id);
+		    $json_param = json_encode($parameters);
+		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+		    $result = methodPost("api/patient/getPatientProfileById",$header,$json_param);
+		    
+		    $result_array = json_decode($result);
+		    $user = $result_array->data;
+		    $status = $result_array->status;
+
+
+		    if ($status == 200) 
+		    {	
+		    	$data['user'] = $user;	
+				$this->load->view('backend/patient/template/header');
+				$this->load->view('backend/patient/order/onprocess_lab_order_alert',$data);
+				$this->load->view('backend/patient/template/footer');
+			}
+			else
+			{
+				$data['error'] = $error;
+                $this->load->view('error', $data);
+			}	
+		} 
+		else 
+		{
+            redirect('patient/Auth/logout', 'refresh');
+        }	
+	}
+
+    public function onprocess_fetch_lab_order_alert()
+	{	
+		if ($this->session->userdata('logged_in_patient')) 
+        {   
+            $token = $this->session->userdata('logged_in_patient')['token'];	
+			$patient_id = $this->session->userdata('logged_in_patient')['patient_id'];
+
+			$parameters = array('patientId' => $patient_id);
+		    $json_param = json_encode($parameters);
+		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+		    $result = methodPost("api/patient/getLabOrdersList",$header,$json_param);
+		    
+		    $result_array = json_decode($result);
+		    $order = $result_array->data;
+		    $status = $result_array->status;
+
+            if (!empty($order)) 
+            {
+            	$data = [];
+
+                $i = 1;
+                foreach ($order as $key => $row) {
+                   	
+                   
+
+                    $labOrder = $row->labOrder;
+                    $labOrder_id = my_encrypt($labOrder->id);
+                    $lab = $row->lab;
+                    $encounter = $row->encounter;
+                    $doctor = $row->doctor;
+                    $labTests = $row->labTests;
+
+                    $dinfo = '<a href=" '.base_url('patient/Order/onprocess_lab_order_detail/').$labOrder_id.'">
+                    <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
+                    <span>'.$doctor->hospitalName.' Hospital</span><br><span>('.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo.' </span></a>';
+   
+
+                    $linfo = '<a href=" '.base_url('patient/Order/onprocess_lab_order_detail/').$labOrder_id.'">
+                    <span class="user-name">'.ucwords($lab->name).'</span><br>
+                    <span>('.$lab->labPhoneCode1.') '.$lab->labPhoneNo1.' </span></a>';
+
+                    $action = '<a href=" '.base_url('patient/Order/onprocess_lab_order_detail/').$labOrder_id.'" class="btn btn-dark">View</a>';         
+
+                    
+
+                    if ($labOrder->paymentStatus== 'pending' ) 
+                    {
+                    	$pstatus = 'Pending';
+                        
+                    }
+                    elseif ($labOrder->paymentStatus== 'processing' )
+                    {
+                    	$pstatus = 'processing &nbsp;&nbsp; <button type="button" class="btn btn-primary">Pay Now</button>';           
+                    }else
+                    {
+                        $pstatus = 'Completed';
+                    }
+
+
+                    if ($labOrder->orderStatus == "pending") 
+                    {
+                        $rstatus = '<button type="button" class="btn btn-secondary btn-sm">Pending</button>';
+                        $action .= '&nbsp;&nbsp; <a href=" '.base_url('patient/Order/cancel_lab_order/').$labOrder_id.'" class="btn btn-dark">Cancel</a>';
+                    }
+                    elseif ($labOrder->orderStatus == "processing") 
+                    {
+                        $rstatus = '<button type="button" class="btn btn-success btn-sm">Processing</button>';
+                    }
+                    else
+                    {
+                        $rstatus = '';
+                    }
+
+
+                    $sub_array = [];
+                    $sub_array[] = '#'.$i;
+                    $sub_array[] = $dinfo;
+                    $sub_array[] = $row->totalReports; 
+                    $sub_array[] = $linfo ;
+                    $sub_array[] = date('d M Y',strtotime($labOrder->orderDate));
+                    $sub_array[] = $rstatus.$payment_status;
+                    $sub_array[] = $pstatus;
+                    $sub_array[] = $action;
+
+                    $data[] = $sub_array;
+
+                 $i++;
+                }
+
+                $output = [
+                    "data" => $data,
+                ];
+            }
+            else
+            {
+            	$output = [
+                    "data" => [],
+                ];
+            }	
+            echo json_encode($output);
+		} 
+        else 
+        {
+            redirect('patient/Auth/logout', 'refresh');
+        }	
+	}
+
+    public function cancel_lab_order($labOrder_id)
+	{	
+		if ($this->session->userdata('logged_in_patient')) 
+        {   
+            $token = $this->session->userdata('logged_in_patient')['token'];	
+            $laborderid = my_decrypt($labOrder_id);
+			
+			$parameters = array('labOrderId' => $laborderid);
+		    $json_param = json_encode($parameters);
+		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+		    $result = methodPost("api/patient/cancelLabOrder",$header,$json_param);
+		    
+		    $result_array = json_decode($result);
+		    $order = $result_array->data;
+		    $status = $result_array->status;
+
+            if ($status == 200) 
+		    {	
+		    	redirect('patient/Order/onprocess_lab_order_alert', 'refresh');
+			}
+			else
+			{
+				$data['error'] = $error;
+                $this->load->view('error', $data);
+			}	
+		} 
+        else 
+        {
+            redirect('patient/Auth/logout', 'refresh');
+        }	
+	}
+
+    public function onprocess_lab_order_detail($labOrder_id)
     {  
         if ($this->session->userdata('logged_in_patient')) 
         {   
             $token = $this->session->userdata('logged_in_patient')['token'];    
-            $encounterid = my_decrypt($encounter_id);
-            $parameters = array('encounterId' => $encounterid);
+            $labOrderid = my_decrypt($labOrder_id);
+            $parameters = array('labOrderId' => $labOrderid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
             $result = methodPost("api/patient/detailActiveLabOrderAlert",$header,$json_param);
@@ -192,7 +367,7 @@ class Order  extends CI_Controller {
                 $data['encounter_id'] = $encounter_id;
                 $data['details'] = $details;
                 $this->load->view('backend/patient/template/header');
-                $this->load->view('backend/patient/order/active_lab_order_detail',$data);
+                $this->load->view('backend/patient/order/onprocess_lab_order_detail',$data);
                 $this->load->view('backend/patient/template/footer');
             }    
             else
@@ -253,7 +428,7 @@ class Order  extends CI_Controller {
 			$parameters = array('patientId' => $patient_id);
 		    $json_param = json_encode($parameters);
 		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-		    $result = methodPost("api/patient/getPharmacyOrdersList",$header,$json_param);
+		    $result = methodPost("api/patient/getPrescribePharmacyOrdersList",$header,$json_param);
 		    
 		    $result_array = json_decode($result);
 		    $order = $result_array->data;
@@ -275,22 +450,12 @@ class Order  extends CI_Controller {
                     if ($encounter->paymentPending==false) 
                     {
                     	$pstatus = 'Paid';
-
-                        if ($medicines[0]->medicineOrderStatus == "prescribe") 
-                        {
                     	   $a = '<a href=" '.base_url('patient/Order/add_pharmacy_order/').$encounter_id.'">
                                     <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
                                     <span>'.$doctor->hospitalName.' Hospital</span></a>';
 
                             $action = '<a href=" '.base_url('patient/Order/add_pharmacy_order/').$encounter_id.'" class="btn btn-primary">Order Now</a>';        
-                        }
-                        else
-                        {    
-                           $a = '<a href=" '.base_url('patient/Order/pharmacy_order_alert_detail/').$encounter_id.'">
-                                    <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
-                                    <span>'.$doctor->hospitalName.' Hospital</span></a>';
-                            $action = '<a href=" '.base_url('patient/Order/add_pharmacy_order/').$encounter_id.'" class="btn btn-dark">View Order</a>';        
-                        }
+                        
                     }
                     else
                     {
@@ -300,7 +465,6 @@ class Order  extends CI_Controller {
                                     <span>'.$doctor->hospitalName.' Hospital</span></a>';
                         $action = '';            
                     }
-
 
 
                     if ($medicines[0]->medicineOrderStatus == "prescribe") 
@@ -319,15 +483,7 @@ class Order  extends CI_Controller {
                     {
                         $ostatus = '';
                     }
-
-                    if (($row->paymentStatusOfOrder == "pending") && ($medicines[0]->medicineOrderStatus == "processing")) 
-                    {
-                        $payment_status = '<button type="button" class="btn btn-info btn-sm">Pay Now</button>';
-                    }
-                    else
-                    {
-                        $payment_status = '';    
-                    }    
+                    
 
 
                     $sub_array = [];
@@ -336,7 +492,7 @@ class Order  extends CI_Controller {
                     $sub_array[] = $row->totalMedicines; 
                     $sub_array[] = '(+'.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo;
                     $sub_array[] = date('d M Y',strtotime($encounter->encounterDate));
-                    $sub_array[] = $ostatus.'<br><br>'.$payment_status;
+                    $sub_array[] = $ostatus.$payment_status;
                     $sub_array[] = $pstatus;
                     $sub_array[] = $action;
                     
@@ -364,19 +520,196 @@ class Order  extends CI_Controller {
         }	
 	}
 
-    public function pharmacy_order_alert_detail($encounter_id)
+	public function onprocess_pharmacy_order_alert()
+	{
+		if ($this->session->userdata('logged_in_patient')) 
+		{	
+			$token = $this->session->userdata('logged_in_patient')['token'];	
+			$patient_id = $this->session->userdata('logged_in_patient')['patient_id'];
+
+			$parameters = array('patientId' => $patient_id);
+		    $json_param = json_encode($parameters);
+		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+		    $result = methodPost("api/patient/getPatientProfileById",$header,$json_param);
+		    
+		    $result_array = json_decode($result);
+		    $user = $result_array->data;
+		    $status = $result_array->status;
+
+
+		    if ($status == 200) 
+		    {	
+			    $data['user'] = $user;	
+				$this->load->view('backend/patient/template/header');
+				$this->load->view('backend/patient/order/onprocess_pharmacy_order_alert',$data);
+				$this->load->view('backend/patient/template/footer');
+			}
+			else
+			{
+				$data['error'] = $error;
+	            $this->load->view('error', $data);
+			}
+		} 
+		else 
+		{
+            redirect('patient/Auth/logout', 'refresh');
+        }	
+	}
+
+    public function fetch_onprocess_pharmacy_order_alert()
+	{	
+		if ($this->session->userdata('logged_in_patient')) 
+        {   
+            $token = $this->session->userdata('logged_in_patient')['token'];	
+			$patient_id = $this->session->userdata('logged_in_patient')['patient_id'];
+
+			$parameters = array('patientId' => $patient_id);
+		    $json_param = json_encode($parameters);
+		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+		    $result = methodPost("api/patient/getPharmacyOrdersList",$header,$json_param);
+		    
+		    $result_array = json_decode($result);
+		    $order = $result_array->data;
+		    $status = $result_array->status;
+            
+            
+            if (!empty($order)) 
+            {
+            	$data = [];
+
+                $i = 1;
+                foreach ($order as $key => $row) {
+                   	
+                   	
+                    $pharmacyorder = $row->pharmacyorder;
+                    $pharmacyorder_id = my_encrypt($pharmacyorder->id);
+
+                    $encounter = $row->encounter;
+                    $doctor = $row->doctor;
+                    $medicines  = $row->medicines; 
+                    $pharmacy  = $row->pharmacy; 
+
+                    $dinfo = '<a href=" '.base_url('patient/Order/onprocess_pharmacy_order_detail/').$pharmacyorder_id.'">
+                                    <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
+                                    <span>'.$doctor->hospitalName.' Hospital</span><br><span>('.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo.' </span></a>';
+                   
+
+                    $pinfo = '<a href=" '.base_url('patient/Order/onprocess_pharmacy_order_detail/').$pharmacyorder_id.'">
+                                    <span class="user-name">'.ucwords($pharmacy->name).'</span><br>
+                                    <span>('.$pharmacy->pharmacyPhoneCode1.') '.$pharmacy->pharmacyPhoneNo1.' </span></a>';
+                                    
+                    $action = '<a href=" '.base_url('patient/Order/onprocess_pharmacy_order_detail/').$pharmacyorder_id.'" class="btn btn-dark">View</a>'; 
+                                    
+                    if ($pharmacyorder->paymentStatus=='pending') 
+                    {
+                    	$pstatus = 'Pending';
+                    }
+                    elseif($pharmacyorder->paymentStatus=='processing'){
+                        $pstatus = 'Processing &nbsp;&nbsp; <button type="button" class="btn btn-primary">Pay Now</button>';
+                    }
+                    else
+                    {
+                        $pstatus = 'Completed';
+                    }
+
+
+                    if ($pharmacyorder->orderStatus == "pending") 
+                    {
+                       $ostatus = '<button type="button" class="btn btn-secondary btn-sm">Pending</button>';
+                       $action .= '&nbsp;&nbsp; <a href=" '.base_url('patient/Order/cancel_pharmacy_order/').$pharmacyorder_id.'" class="btn btn-dark">Cancel</a>';
+
+                    }
+                    elseif ($pharmacyorder->orderStatus  == "processing") 
+                    {
+                       $ostatus = '<button type="button" class="btn btn-success btn-sm">Processing</button>';
+                    }
+                    else
+                    {
+                        $ostatus = '';
+                    }
+
+
+                    $sub_array = [];
+                    $sub_array[] = '#'.$i;
+                    $sub_array[] = $dinfo;
+                    $sub_array[] = $row->totalMedicines; 
+                    $sub_array[] = $pinfo;
+                    $sub_array[] = date('d M Y',strtotime($encounter->encounterDate));
+                    $sub_array[] = $ostatus.$payment_status;
+                    $sub_array[] = $pstatus;
+                    $sub_array[] = $action;
+                    
+
+                    $data[] = $sub_array;
+
+                 $i++;
+                }
+
+                $output = [
+                    "data" => $data,
+                ];
+            }
+            else
+            {
+            	$output = [
+                    "data" => [],
+                ];
+            }	
+            echo json_encode($output);
+		} 
+        else 
+        {
+            redirect('patient/Auth/logout', 'refresh');
+        }	
+	}
+
+    public function cancel_pharmacy_order($pharmacyorder_id)
+	{	
+		if ($this->session->userdata('logged_in_patient')) 
+        {   
+            $token = $this->session->userdata('logged_in_patient')['token'];	
+            $pharmacyorderid = my_decrypt($pharmacyorder_id);
+			
+			$parameters = array('pharmacyOrderId' => $pharmacyorderid);
+		    $json_param = json_encode($parameters);
+		    $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+		    $result = methodPost("api/patient/cancelPharmacyOrder",$header,$json_param);
+		    
+		    $result_array = json_decode($result);
+		    $order = $result_array->data;
+		    $status = $result_array->status;
+
+            if ($status == 200) 
+		    {	
+		    	redirect('patient/Order/onprocess_pharmacy_order_alert', 'refresh');
+			}
+			else
+			{
+				$data['error'] = $error;
+                $this->load->view('error', $data);
+			}	
+		} 
+        else 
+        {
+            redirect('patient/Auth/logout', 'refresh');
+        }	
+	}
+
+    public function onprocess_pharmacy_order_detail($pharmacyorder_id)
     {  
         if ($this->session->userdata('logged_in_patient')) 
         {   
             $token = $this->session->userdata('logged_in_patient')['token'];    
-            $encounterid = my_decrypt($encounter_id);
-            $parameters = array('encounterId' => $encounterid);
+            $pharmacyorderid = my_decrypt($pharmacyorder_id);
+            $parameters = array('pharmacyOrderId' => $pharmacyorderid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
             $result = methodPost("api/patient/detailActivePharmacyOrderAlert",$header,$json_param);
             $result_array = json_decode($result);
             $details = $result_array->data;
+           // print_r($details);exit;
             $status = $result_array->status;
+            
 
             if ($status == 200) 
             {   
@@ -385,7 +718,7 @@ class Order  extends CI_Controller {
 
                 /*print_r($data['details']); exit();*/
                 $this->load->view('backend/patient/template/header');
-                $this->load->view('backend/patient/order/pharmacy_order_alert_detail',$data);
+                $this->load->view('backend/patient/order/onprocess_pharmacy_order_detail',$data);
                 $this->load->view('backend/patient/template/footer');
             }    
             else
@@ -759,24 +1092,34 @@ class Order  extends CI_Controller {
 
                 $i = 1;
                 foreach ($order as $key => $row) {
-                    
+
                     $pharmacyorder = $row->pharmacyorder;
-                    $order_id = my_encrypt($pharmacyorder->id);
+                    $pharmacyorder_id = my_encrypt($pharmacyorder->id);
+
+                    $encounter = $row->encounter;
                     $doctor = $row->doctor;
+                    $medicines  = $row->medicines; 
+                    $pharmacy  = $row->pharmacy; 
 
                     
                         $pstatus = ucwords($pharmacyorder->orderStatus);
-                        $a = '<a href=" '.base_url('patient/Order/pharmacy_order_detail/').$order_id.'">
-                                    <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
-                                    <span>'.$doctor->hospitalName.' Hospital</span></a>';
-                        $action = '<a href=" '.base_url('patient/Order/pharmacy_order_detail/').$order_id.'" class="btn btn-dark">View Order</a>';            
-                      
+
+                        $dinfo = '<a href=" '.base_url('patient/Order/pharmacy_order_detail/').$pharmacyorder_id.'">
+                        <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
+                        <span>'.$doctor->hospitalName.' Hospital</span><br><span>('.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo.' </span></a>';
+       
+
+                        $pinfo = '<a href=" '.base_url('patient/Order/pharmacy_order_detail/').$pharmacyorder_id.'">
+                        <span class="user-name">'.ucwords($pharmacy->name).'</span><br>
+                        <span>('.$pharmacy->pharmacyPhoneCode1.') '.$pharmacy->pharmacyPhoneNo1.' </span></a>';
+                        
+                        $action = '<a href=" '.base_url('patient/Order/pharmacy_order_detail/').$pharmacyorder_id.'" class="btn btn-dark">View</a>'; 
 
                     $sub_array = [];
                     $sub_array[] = '#'.$i;
-                    $sub_array[] = $a;
+                    $sub_array[] = $dinfo;
                     $sub_array[] = $row->totalMedicines; 
-                    $sub_array[] = '(+'.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo;
+                    $sub_array[] = $pinfo;
                     $sub_array[] = date('d M Y',strtotime($pharmacyorder->orderDate));
                     $sub_array[] = $pstatus;
                     $sub_array[] = $action;
@@ -863,22 +1206,32 @@ class Order  extends CI_Controller {
                 $i = 1;
                 foreach ($order as $key => $row) {
                     
-                    $laborder = $row->labOrder;
-                    $order_id = my_encrypt($laborder->id);
+                    $labOrder = $row->labOrder;
+                    $labOrder_id = my_encrypt($labOrder->id);
+                    $lab = $row->lab;
+                    $encounter = $row->encounter;
                     $doctor = $row->doctor;
+                    $labTests = $row->labTests;
+
+                    $dinfo = '<a href=" '.base_url('patient/Order/lab_order_detail/').$labOrder_id.'">
+                    <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
+                    <span>'.$doctor->hospitalName.' Hospital</span><br><span>('.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo.' </span></a>';
+   
+
+                    $linfo = '<a href=" '.base_url('patient/Order/lab_order_detail/').$labOrder_id.'">
+                    <span class="user-name">'.ucwords($lab->name).'</span><br>
+                    <span>('.$lab->labPhoneCode1.') '.$lab->labPhoneNo1.' </span></a>';
 
                     $pstatus = ucwords($laborder->orderStatus);
-                    $a = '<a href=" '.base_url('patient/Order/lab_order_detail/').$order_id.'">
-                                    <span class="user-name">Dr. '.ucwords($doctor->name).'</span><br>
-                                    <span>'.$doctor->hospitalName.' Hospital</span></a>';
-                    $action = '<a href=" '.base_url('patient/Order/lab_order_detail/').$order_id.'" class="btn btn-dark">View Order</a>';   
+                    
+                    $action = '<a href=" '.base_url('patient/Order/lab_order_detail/').$labOrder_id.'" class="btn btn-dark">View</a>'; 
 
                     $sub_array = [];
                     $sub_array[] = '#'.$i;
-                    $sub_array[] = $a;
+                    $sub_array[] = $dinfo;
                     $sub_array[] = $row->totalReports; 
-                    $sub_array[] = '(+'.$doctor->doctorPhoneCode.') '.$doctor->doctorPhoneNo;
-                    $sub_array[] = date('d M Y',strtotime($laborder->orderDate));
+                    $sub_array[] = $linfo;
+                    $sub_array[] = date('d M Y',strtotime($labOrder->orderDate));
                     $sub_array[] = $pstatus;
                     $sub_array[] = $action;
 
@@ -914,7 +1267,7 @@ class Order  extends CI_Controller {
             $parameters = array('encounterId' => $encounterid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-            $result = methodPost("api/patient/detailActiveLabOrderAlert",$header,$json_param);
+            $result = methodPost("api/patient/detailPrescribeLabOrderAlert",$header,$json_param);
             $result_array = json_decode($result);
             $details = $result_array->data;
             $status = $result_array->status;
@@ -985,23 +1338,19 @@ class Order  extends CI_Controller {
             $landmark = $_POST['landmark'];
             $pincode = $_POST['pincode'];
             $orderDate = $_POST['orderDate'];
-
-            $parameters = array('encounterId' => $encounterId);
-            $json_param = json_encode($parameters);
-            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-            $result = methodPost("api/patient/detailActiveLabOrderAlert",$header,$json_param);
-            $result_array = json_decode($result);
-            $details = $result_array->data;
-            $labTests = $details->labTests;
+            $encounterLabId = $_POST['encounterLabId'];
             
-            foreach ($labTests as $key => $value) {
+            for ($i=0; $i < count($encounterLabId); $i++) { 
+                  
+                $explode = explode('_',$encounterLabId[$i]);
+
                 $labTest[] = array(
-                    'encounterLabId' => $value->id,
-                    'labTestName' => $value->labTestName
-                    );
+                    'encounterLabId' => $explode[0], 
+                    'labTestName' => $explode[1],
+                    
+                ); 
             }
-
-
+            
             $data_value = array(
             'patientId' => $patient_id,    
             'encounterId' => $encounterId,
@@ -1015,11 +1364,14 @@ class Order  extends CI_Controller {
             'labTest' => $labTest
             );
 
+            
+
             $formdata = json_encode($data_value);
+            
+            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
 
             $result1 = methodPost('api/patient/orderLabOrderAlert', $header, $formdata);
             $result_array1 = json_decode($result1);
-
             $error = $result_array1->error;
             $message = $result_array1->message;
             $status = $result_array1->status;
@@ -1079,13 +1431,13 @@ class Order  extends CI_Controller {
         }    
     }
 
-    public function lab_order_detail($order_id)
+    public function lab_order_detail($labOrder_id)
     {  
         if ($this->session->userdata('logged_in_patient')) 
         {   
             $token = $this->session->userdata('logged_in_patient')['token'];    
-            $orderid = my_decrypt($order_id);
-            $parameters = array('labOrderId' => $orderid);
+            $labOrderid = my_decrypt($labOrder_id);
+            $parameters = array('labOrderId' => $labOrderid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
             $result = methodPost("api/patient/detailPastLabOrderAlert",$header,$json_param);
@@ -1122,7 +1474,7 @@ class Order  extends CI_Controller {
             $parameters = array('encounterId' => $encounterid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-            $result = methodPost("api/patient/detailActivePharmacyOrderAlert",$header,$json_param);
+            $result = methodPost("api/patient/detailPrescribePharmacyOrderAlert",$header,$json_param);
             $result_array = json_decode($result);
             $details = $result_array->data;
             $status = $result_array->status;
@@ -1184,6 +1536,7 @@ class Order  extends CI_Controller {
     {
         if ($this->session->userdata('logged_in_patient')) 
         {   
+            
             $token = $this->session->userdata('logged_in_patient')['token'];
             $patient_id = $this->session->userdata('logged_in_patient')['patient_id'];
             $encounterId = my_decrypt($_POST['encounterId']);
@@ -1203,25 +1556,23 @@ class Order  extends CI_Controller {
             $noOfDays = $_POST['noOfDays'];
             $qty = $_POST['qty'];
             $encounterMedicinesId = $_POST['encounterMedicinesId'];
-
-
-            for ($i=0; $i <count($drugName) ; $i++) 
-            { 
-                $medicinesDetail[] = array(
-                    'encounterMedicinesId' => $encounterMedicinesId[$i],
-                    'drugName' => $drugName[$i],
-                    'morning' => $morning[$i],
-                    'afternoon' => $afternoon[$i],
-                    'evening' => $evening[$i],
-                    'night' => $night[$i],
-                    'comment' => $comment[$i],
-                    'noOfDays' => $noOfDays[$i],
-                    'qty' => $qty[$i]
+            if (!empty($encounterMedicinesId)) {
+                foreach ($encounterMedicinesId as $key => $selected) {
+                    $medicinesDetail[] = array(
+                        'encounterMedicinesId' => $encounterMedicinesId[$key],
+                        'drugName' => $drugName[$selected],
+                        'morning' => $morning[$selected],
+                        'afternoon' => $afternoon[$selected],
+                        'evening' => $evening[$selected],
+                        'night' => $night[$selected],
+                        'comment' => $comment[$selected],
+                        'noOfDays' => $noOfDays[$selected],
+                        'qty' => $qty[$selected]
                     );
+                }
+               
+                
             }
-
-
-
 
             $data_value = array(
             'patientId' => $patient_id,    
@@ -1235,18 +1586,17 @@ class Order  extends CI_Controller {
             'orderDate' => $orderDate,
             'medicinesDetail' => $medicinesDetail
             );
-
             $formdata = json_encode($data_value);
-
 
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
             $result1 = methodPost('api/patient/orderPharmacyOrderAlert', $header, $formdata);
+            
             $result_array1 = json_decode($result1);
-
+            
             $error = $result_array1->error;
             $message = $result_array1->message;
             $status = $result_array1->status;
-
+            
 
             if ($status == 200) 
             {
@@ -1260,7 +1610,6 @@ class Order  extends CI_Controller {
             }
             echo json_encode($data);
 
-
             
         } 
         else 
@@ -1268,6 +1617,5 @@ class Order  extends CI_Controller {
             redirect('patient/Auth/logout', 'refresh');
         }
     }
-	
 
 }
