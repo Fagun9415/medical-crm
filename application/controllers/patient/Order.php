@@ -267,7 +267,7 @@ class Order  extends CI_Controller {
                         $pstatus = 'Completed';
                     }
 
-
+                    
                     if ($labOrder->orderStatus == "pending") 
                     {
                         $rstatus = '<button type="button" class="btn btn-secondary btn-sm">Pending</button>';

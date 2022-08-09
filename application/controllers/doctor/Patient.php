@@ -1051,13 +1051,11 @@ class Patient  extends CI_Controller {
 				'doctorPhoneNo' => $doctorPhoneNo,
 				'paymentMode' => $paymentMode 
 				);
-
 			$final_data = json_encode($data_value);
 
 			$header = ["authorization: Bearer " . $token, "content-type: application/json"];
 			$result = methodPost('api/doctors/createEncounter', $header, $final_data);
 	        $result_array = json_decode($result);
-
 
 
 	        $error = $result_array->error;

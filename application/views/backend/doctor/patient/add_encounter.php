@@ -71,10 +71,12 @@
                                     <h5 class="mb-1">Chronic Illness</h5>
                                     <div class="form-group">
                                         <select class="form-control" multiple id="chronic-illness" name="chronicalIllness[]" data-placeholder="Chronic Illness">
+                                            <option value="None">None</option>
                                             <option value="Diabetes">Diabetes</option>
                                             <option value="Hypertension">Hypertension</option>
                                             <option value="Kidney Disease">Kidney Disease</option>
                                             <option value="Liver Disease">Liver Disease</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
                                 </div>

@@ -83,15 +83,27 @@
                                     <label class="form-check-label" for="others">Others</label>
                                 </div>
                             </div>
+                            <label class="focus-label">Relation<span class="text-danger"></span></label>
                             <div class="form-group">
                                 <select class="form-control floating testauto" name="role" >
                                 <option value="father">Father</option>
                                 <option value="mother">Mother</option>
                                 <option value="wife">Wife</option>
                                 <option value="son">Son</option>
-                                <option value="daughter">Daughter</option>
+                                <option value="daughter">daughter</option>
+                                <option value="grand_father">grand_father</option>
+                                <option value="grand_mother">grand_mother</option>
+                                <option value="brother">brother</option>
+                                <option value="sister">sister</option>
+                                <option value="cousin_sister">cousin_sister</option>
+                                <option value="sister_in_law">sister_in_law</option>
+                                <option value="daughter_in_law">daughter_in_law</option>
+                                <option value="nephew">nephew</option>
+                                <option value="niece">niece</option>
+                                <option value="grand_son">grand_son</option>
+                                <option value="grand_daughter">grand_daughter</option>
                                 </select>
-                                <label class="focus-label">Relation<span class="text-danger"></span></label>
+                                
                             </div>
                         </div>
                     </div>

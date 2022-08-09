@@ -41,8 +41,13 @@
 
                 <div class="login-wrapper">
                     <div class="loginbox">
-                        <div class="img-logo">
-                            <img src="<?php echo base_url('backend/assets/img/logo.png'); ?>" class="img-fluid" alt="Logo">
+                        <div class="row">
+                            <div class="img-logo col-md-6">
+                                <img src="<?php echo base_url('backend/assets/img/logo.png'); ?>" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <a href="<?php echo base_url(); ?>" class="btn btn-secondary " > Home </a>
+                            </div>
                         </div>
                         <h3>Lab Login</h3>
                         <p class="account-subtitle">login to your account to continue</p>

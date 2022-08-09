@@ -18,11 +18,11 @@ $encounter = $details->encounter;
                                     <hr class="mt-0">
                                     <div class="col-12">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="delivery" value="delivery">
+                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="delivery" value="delivery" disabled>
                                             <label class="form-check-label" for="delivery">Delivery</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="pickup" value="pickup">
+                                            <input class="form-check-input" type="radio" name="pharmacyOrderMode" id="pickup" value="pickup" checked>
                                             <label class="form-check-label" for="pickup">Pick-Up</label>
                                         </div>
                                     </div>
@@ -37,30 +37,7 @@ $encounter = $details->encounter;
                                     Walk-in QR Code
                                     <img src="<?php echo base_url('backend/assets/img/QR_code_for_mobile_English_Wikipedia.svg.png'); ?>" height="150" width="150">
                                 </div>
-                                    <div class="col-md-4 col-sm-12" id="adl1" style="display: none;">
-                                        <div class="form-group">
-                                            <label>Address Line 1<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="orderAddressLine1"  id="orderAddressLine1">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12" id="adl2" style="display: none;">
-                                        <div class="form-group">
-                                            <label>Address Line 2<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="orderAddressLine2"  id="orderAddressLine2" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12" id="lmark" style="display: none;">
-                                        <div class="form-group">
-                                            <label>Landmark <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="landmark"  id="landmark">
-                                        </div>
-                                    </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="form-group">
-                                        <label>Pincode <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="pincode"  id="pincode" required >
-                                    </div>
-                                </div>
+                                   
                             </div>
                         </div>
                     </div>
@@ -92,19 +69,19 @@ $encounter = $details->encounter;
                                         </thead>
                                         <tbody>
                                         <?php foreach ($med as $key => $value) {?>
+
                                             <tr>
-                                                <input type="hidden" name="encounterMedicinesId[]" value="<?php echo $value->id; ?>" >
-                                                <td><?php echo $key+1; ?></td>
-                                                <td><input type="hidden" name="drugName[]" value="<?php echo $value->drugName; ?>" ><?php echo $value->drugName; ?></td>
-                                                <td><input type="hidden" name="morning[]" value="<?php echo $value->morning; ?>" ><?php echo $value->morning; ?></td>
-                                                <td><input type="hidden" name="afternoon[]" value="<?php echo $value->afternoon; ?>" ><?php echo $value->afternoon; ?></td>
-                                                <td><input type="hidden" name="evening[]" value="<?php echo $value->evening; ?>" ><?php echo $value->evening; ?></td>
-                                                <td><input type="hidden" name="night[]" value="<?php echo $value->night; ?>" ><?php echo $value->night; ?></td>
-                                                <td><input type="hidden" name="comment[]" value="<?php echo $value->comment; ?>" ><?php echo $value->comment; ?></td>
-                                                <td><input type="hidden" name="noOfDays[]" value="<?php echo $value->noOfDays; ?>" ><?php echo $value->noOfDays; ?></td>
+                                                <td><input type=checkbox class="me-2" name ="encounterMedicinesId[]" value="<?php echo $value->id; ?>"><?php echo $key+1; ?></td>
+                                                <td><input type="hidden" name="drugName[<?php echo $value->id ; ?>]" value="<?php echo $value->drugName; ?>" ><?php echo $value->drugName; ?></td>
+                                                <td><input type="hidden" name="morning[<?php echo $value->id ; ?>]" value="<?php echo $value->morning; ?>" ><?php echo $value->morning; ?></td>
+                                                <td><input type="hidden" name="afternoon[<?php echo $value->id ; ?>]" value="<?php echo $value->afternoon; ?>" ><?php echo $value->afternoon; ?></td>
+                                                <td><input type="hidden" name="evening[<?php echo $value->id ; ?>]" value="<?php echo $value->evening; ?>" ><?php echo $value->evening; ?></td>
+                                                <td><input type="hidden" name="night[<?php echo $value->id ; ?>]" value="<?php echo $value->night; ?>" ><?php echo $value->night; ?></td>
+                                                <td><input type="hidden" name="comment[<?php echo $value->id ; ?>]" value="<?php echo $value->comment; ?>" ><?php echo $value->comment; ?></td>
+                                                <td><input type="hidden" name="noOfDays[<?php echo $value->id ; ?>]" value="<?php echo $value->noOfDays; ?>" ><?php echo $value->noOfDays; ?></td>
                                                 <td>
                                                     <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" name="qty[]">
+                                                        <input type="number" class="form-control floating" name="qty[<?php echo $value->id;?>]">
                                                         <label class="focus-label">Quantity (strip/tube/bottle)<span class="text-danger"></span></label>
                                                     </div>
                                                 </td>
