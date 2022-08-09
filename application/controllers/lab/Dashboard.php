@@ -212,7 +212,7 @@ class Dashboard  extends CI_Controller {
             $parameters = array('encounterId' => $encounterid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-            $result = methodPost("api/patient/detailActiveLabOrderAlert",$header,$json_param);
+            $result = methodPost("api/patient/detailPrescribeLabOrderAlert",$header,$json_param);
             $result_array = json_decode($result);
 
             $details = $result_array->data;
@@ -222,6 +222,7 @@ class Dashboard  extends CI_Controller {
             {   
                 $data['encounter_id'] = $order_id;
                 $data['patient_id'] = $patient_id;
+                $data['details'] = $details->labTests;
                 $data['alldata'] = $details;  
                 $this->load->view('backend/lab/template/header');
 				$this->load->view('backend/lab/template/add_order',$data);
@@ -253,38 +254,36 @@ class Dashboard  extends CI_Controller {
             $orderAddressLine1 = $_POST['orderAddressLine1'];
             $orderAddressLine2 = $_POST['orderAddressLine2'];
             $landmark = $_POST['landmark'];
-            $pincode = $_POST['pincode'];
+            $pincode = "0";
             $orderDate = $_POST['orderDate'];
-
-            $parameters = array('encounterId' => $encounterId);
-            $json_param = json_encode($parameters);
-            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-            $result = methodPost("api/patient/detailActiveLabOrderAlert",$header,$json_param);
-            $result_array = json_decode($result);
-            $details = $result_array->data;
-            $labTests = $details->labTests;
+            $encounterLabId = $_POST['encounterLabId'];
             
-            foreach ($labTests as $key => $value) {
+            for ($i=0; $i < count($encounterLabId); $i++) { 
+                  
+                $explode = explode('_',$encounterLabId[$i]);
+
                 $labTest[] = array(
-                    'encounterLabId' => $value->id,
-                    'labTestName' => $value->labTestName
-                    );
+                    'encounterLabId' => $explode[0], 
+                    'labTestName' => $explode[1],
+                    
+                ); 
             }
 
-
             $data_value = array(
-            'patientId' => $patient_id,    
-            'encounterId' => $encounterId,
-            'labId' => $labId,
-            'labOrderMode' => $labOrderMode,
-            'orderAddressLine1' => $orderAddressLine1,
-            'orderAddressLine2' => $orderAddressLine2,
-            'landmark' => $landmark,
-            'pincode' => $pincode,
-            'orderDate' => $orderDate,
-            'labTest' => $labTest
+                'patientId' => $patient_id,    
+                'encounterId' => $encounterId,
+                'labId' => $labId,
+                'labOrderMode' => $labOrderMode,
+                'orderAddressLine1' => $orderAddressLine1,
+                'orderAddressLine2' => $orderAddressLine2,
+                'landmark' => $landmark,
+                'pincode' => "$pincode",
+                'orderDate' => $orderDate,
+                'labTest' => $labTest
             );
+           
 
+            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
             $formdata = json_encode($data_value);
 
             $result1 = methodPost('api/patient/orderLabOrderAlert', $header, $formdata);

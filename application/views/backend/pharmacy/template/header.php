@@ -166,7 +166,7 @@ $user = $this->session->userdata('logged_in_pharmacy')['profile'];
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="<?php if ($url=='Dashboard' && $url2=='index') { echo 'active'; } ?>">
+                        <li class="<?php if ($url=='Dashboard' && ($url2=='index' || $url2=='add_walkin_order' || $url2=='schedule_order_list' || $url2=='add_order')) { echo 'active'; } ?>">
                             <a href="<?php echo base_url('pharmacy/Dashboard'); ?>"><i class="feather-grid"></i> <span>Dashboard</span></a>
                         </li>
                         <!-- <li class="<?php if (($url=='Order') && ($url2=='new_order' || $url2=='add_order_step_one' || $url2=='add_order_step_two')) { echo "active";} ?>">

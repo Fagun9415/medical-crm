@@ -8,7 +8,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="datatable table table-stripped" id="patient-table">
+                                        <table class="datatable table table-stripped" id="patient-table" style="width:100%">
                                             <thead >
                                                 <tr>    
                                                     <th>ID</th>
@@ -43,7 +43,7 @@
       function credential_data()
       {
          var mobileno = '<?php echo $mobile_no; ?>';
-
+    
 
         $('#patient-table').DataTable( {
                 /*dom: '<"row"<"col-md-12"<"row"<"col-md-6"B><"col-md-6"f> > ><"col-md-12"rt> <"col-md-12"<"row"<"col-md-5"i><"col-md-7"p>>> >',

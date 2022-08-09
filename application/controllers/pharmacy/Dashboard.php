@@ -214,7 +214,7 @@ class Dashboard  extends CI_Controller {
             $parameters = array('encounterId' => $encounterid);
             $json_param = json_encode($parameters);
             $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-            $result = methodPost("api/patient/detailActivePharmacyOrderAlert",$header,$json_param);
+            $result = methodPost("api/patient/detailPrescribePharmacyOrderAlert",$header,$json_param);
             $result_array = json_decode($result);
             $details = $result_array->data;
             $status = $result_array->status;
@@ -253,10 +253,10 @@ class Dashboard  extends CI_Controller {
             $encounterId = my_decrypt($_POST['encounterId']);
             $pharmacyId = $pharmacy_id;
             $pharmacyOrderMode = $_POST['pharmacyOrderMode'];
-            $orderAddressLine1 = $_POST['orderAddressLine1'];
-            $orderAddressLine2 = $_POST['orderAddressLine2'];
-            $landmark = $_POST['landmark'];
-            $pincode = $_POST['pincode'];
+            $orderAddressLine1 = "";
+            $orderAddressLine2 = "";
+            $landmark = "";
+            $pincode = "";
             $orderDate = $_POST['orderDate'];
             $drugName = $_POST['drugName'];
             $morning = $_POST['morning'];
@@ -269,23 +269,21 @@ class Dashboard  extends CI_Controller {
             $encounterMedicinesId = $_POST['encounterMedicinesId'];
 
 
-            for ($i=0; $i <count($drugName) ; $i++) 
-            { 
-                $medicinesDetail[] = array(
-                    'encounterMedicinesId' => $encounterMedicinesId[$i],
-                    'drugName' => $drugName[$i],
-                    'morning' => $morning[$i],
-                    'afternoon' => $afternoon[$i],
-                    'evening' => $evening[$i],
-                    'night' => $night[$i],
-                    'comment' => $comment[$i],
-                    'noOfDays' => $noOfDays[$i],
-                    'qty' => $qty[$i]
+            if (!empty($encounterMedicinesId)) {
+                foreach ($encounterMedicinesId as $key => $selected) {
+                    $medicinesDetail[] = array(
+                        'encounterMedicinesId' => $encounterMedicinesId[$key],
+                        'drugName' => $drugName[$selected],
+                        'morning' => $morning[$selected],
+                        'afternoon' => $afternoon[$selected],
+                        'evening' => $evening[$selected],
+                        'night' => $night[$selected],
+                        'comment' => $comment[$selected],
+                        'noOfDays' => $noOfDays[$selected],
+                        'qty' => $qty[$selected]
                     );
+                }                
             }
-
-
-
 
             $data_value = array(
             'patientId' => $patient_id,    

@@ -38,7 +38,7 @@
     #searchInput:focus {
       border-color: #4d90fe;
     }  
-    }
+    
 </style>
 </head>
 
@@ -132,6 +132,12 @@
                                 <div class="form-group">
                                     <label>Pharmacy Registration Document <span class="text-danger">*</span></label>
                                     <input type="file" class="form-control" name="file" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Doctor Document <span class="text-danger">*</span></label>
+                                    <input type="file" class="form-control"  required>
                                 </div>
                             </div>
                             <br><br>
