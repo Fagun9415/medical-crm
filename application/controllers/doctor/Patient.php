@@ -942,7 +942,8 @@ class Patient  extends CI_Controller {
         	$token = $this->session->userdata('logged_in_doctor')['token'];	
         	$patientId = my_decrypt($_POST['patientId']);
         	$encounterDate = $_POST['encounterDate'];
-        	$chronicalIllness = $_POST['chronicalIllness'];
+			$chronicalIllness = $_POST['chronicalIllness'];
+
         	$chiefComplaint = $_POST['chiefComplaint'];
         	$otherSymptoms = $_POST['otherSymptoms'];
         	$provisionalDiagnosis = $_POST['pdd'];
@@ -961,10 +962,19 @@ class Patient  extends CI_Controller {
 			$comment = $_POST['comment'];
 			$noOfDays = $_POST['noOfDays'];
 
-			$chronicalIllnessimplode = implode(",",$chronicalIllness);	
 
+			$abc = array_search('None', $chronicalIllness);
 
-
+			if($chronicalIllness[0]=='None')
+			{
+				$chronicalIllnessimplode = array('None');
+			}
+			else{
+				$chronicalIllnessimplode = $chronicalIllness;
+			}
+			$chronicalIllnessimplode = implode(",",$chronicalIllnessimplode);	
+			
+print_r($chronicalIllnessimplode);exit;
 			for ($i=0; $i <count($drug_name) ; $i++) 
 			{ 
 				$medicinesDetail[] = array
