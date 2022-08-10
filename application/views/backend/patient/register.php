@@ -38,7 +38,7 @@
     #searchInput:focus {
       border-color: #4d90fe;
     }  
-    }
+    
 </style>
 </head>
 
