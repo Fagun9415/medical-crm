@@ -9,7 +9,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="datatable table table-stripped" id="patient-table">
+                                        <table class="datatable table table-stripped" id="patient-table" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>

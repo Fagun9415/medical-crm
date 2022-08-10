@@ -90,18 +90,18 @@
                                 <option value="mother">Mother</option>
                                 <option value="wife">Wife</option>
                                 <option value="son">Son</option>
-                                <option value="daughter">daughter</option>
-                                <option value="grand_father">grand_father</option>
-                                <option value="grand_mother">grand_mother</option>
-                                <option value="brother">brother</option>
-                                <option value="sister">sister</option>
-                                <option value="cousin_sister">cousin_sister</option>
-                                <option value="sister_in_law">sister_in_law</option>
-                                <option value="daughter_in_law">daughter_in_law</option>
-                                <option value="nephew">nephew</option>
-                                <option value="niece">niece</option>
-                                <option value="grand_son">grand_son</option>
-                                <option value="grand_daughter">grand_daughter</option>
+                                <option value="daughter">Daughter</option>
+                                <option value="brother">Brother</option>
+                                <option value="sister">Sister</option>
+                                <option value="grand_father">Grand Father</option>
+                                <option value="grand_mother">Grand mother</option>
+                                <option value="cousin_sister">Cousin Sister</option>
+                                <option value="sister_in_law">Sister In Law</option>
+                                <option value="daughter_in_law">Daughter In Law</option>
+                                <option value="nephew">Nephew</option>
+                                <option value="niece">Niece</option>
+                                <option value="grand_son">Grand Son</option>
+                                <option value="grand_daughter">Drand Daughter</option>
                                 </select>
                                 
                             </div>
