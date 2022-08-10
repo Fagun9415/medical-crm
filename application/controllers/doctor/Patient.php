@@ -960,6 +960,7 @@ class Patient  extends CI_Controller {
 			$night = $_POST['night'];
 			$comment = $_POST['comment'];
 			$noOfDays = $_POST['noOfDays'];
+			$chronicalIllnessimplode = implode(",",$chronicalIllness);
 		
 			for ($i=0; $i <count($drug_name) ; $i++) 
 			{ 
