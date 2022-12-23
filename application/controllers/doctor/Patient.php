@@ -169,7 +169,7 @@ class Patient  extends CI_Controller {
 
                 foreach ($patient as $key => $row) {
                     $encounter_id = my_encrypt($row->id);
-
+					$patientId = my_encrypt($row->patientId);
                     $p  = $row->patient;
 
 
@@ -193,6 +193,8 @@ class Patient  extends CI_Controller {
                     $sub_array[] = ucwords($payment);
                     $sub_array[] = '<a href="'. base_url('doctor/Patient/edit_patient/').$encounter_id.'" class="btn btn-secondary">
                                                     Edit Patient</a>';
+                    $sub_array[] = '<a href="'. base_url('doctor/Patient/past_encounter/').$patientId.'" class="btn btn-secondary">
+                                                    View</a>';
 
                     $data[] = $sub_array;
                     $i++;
@@ -217,6 +219,98 @@ class Patient  extends CI_Controller {
         }	
 	}
 
+	public function past_encounter($patientId)
+	{	
+		
+		if ($this->session->userdata('logged_in_doctor')) 
+        {	
+        	$token = $this->session->userdata('logged_in_doctor')['token'];	
+
+		
+			$data['pid'] = $patientId;
+			$this->load->view('backend/doctor/template/header');
+			$this->load->view('backend/doctor/patient/past_encounter', $data);
+			$this->load->view('backend/doctor/template/footer');
+		} 
+        else 
+        {
+            redirect('doctor/Auth/logout', 'refresh');
+        }	
+
+	}
+
+	public function fetch_past_encounter()
+	{	
+		if ($this->session->userdata('logged_in_doctor')) 
+        {   
+            $token = $this->session->userdata('logged_in_doctor')['token'];	
+			
+
+			
+				$data_value = [
+                'patientId' => "11" 
+            	];
+			
+
+			
+
+            $formdata = json_encode($data_value);
+
+            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+
+            $result = methodPost('api/doctors/past10EncounterOfPatient', $header, $formdata);
+            $requestlist = json_decode($result);
+
+            $patient = $requestlist->data;
+            $patientdetail = $patient->patient;
+            $encountersDetail = $patient->encounters;
+			
+            if (!empty($patient)) 
+            {	
+				
+				$data = [];
+            	$i=1;
+				
+                foreach ($encountersDetail as $key => $row) {
+					
+					$doctordetails = $row->doctor;
+					$encountersId = my_encrypt($row->id);
+
+                 	
+
+                    $sub_array = [];
+                    $sub_array[] = '#'.$i;
+                    $sub_array[] = $patientdetail->name.'<br>'.$patientdetail->email.'<br>(+'.$patientdetail->phoneCode.') '.$patientdetail->phoneNo;
+                    $sub_array[] = $doctordetails->name .'<br>'.$doctordetails->hospitalName;
+                    $sub_array[] = $doctordetails->email.'<br>'.$doctordetails->doctorPhoneNo;
+                   
+                    $sub_array[] = date('d-m-Y',strtotime($row->encounterDate)).'<br>Updated at : '.date('d-m-Y',strtotime($row->updatedAt));
+             
+                    $sub_array[] = '<a href="'. base_url('doctor/Patient/past_patient_detail/').$encountersId.'" class="btn btn-secondary">
+                                                    View</a>';
+
+                    $data[] = $sub_array;
+                    $i++;
+
+                }
+
+                $output = [
+                    "data" => $data,
+                ];
+            }
+            else
+            {
+            	$output = [
+                    "data" => [],
+                ];
+            }	
+            echo json_encode($output);
+		} 
+        else 
+        {
+            redirect('doctor/Auth/logout', 'refresh');
+        }	
+	}
 
 	public function past_patient()
 	{	

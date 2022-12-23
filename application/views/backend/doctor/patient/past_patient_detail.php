@@ -226,11 +226,11 @@
                                     <hr class="mt-0">
                                     <div class="col-12 mb-5">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="Symptoms" id="syes" value="yes" <?php if ($encounter->symptomsResolved == true) { echo "checked";} else {}?>>
+                                            <input class="form-check-input" type="radio" name="Symptoms" id="syes" value="yes"  <?php if ($encounter->symptomsResolved == true) { echo "checked";} else { echo "disabled"; }?>>
                                             <label class="form-check-label" for="syes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="Symptoms" id="sno" value="no" <?php if ($encounter->symptomsResolved == false) { echo "checked";} else {}?>>
+                                            <input class="form-check-input" type="radio" name="Symptoms" id="sno" value="no" <?php if ($encounter->symptomsResolved == false) { echo "checked";} else { echo "disabled"; }?>>
                                             <label class="form-check-label" for="sno">No</label>
                                         </div>
                                     </div>
@@ -239,12 +239,12 @@
                                     <div class="col-12 mb-5">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="Complete" id="yes" value="yes"
-                                            <?php if ($encounter->isComplete == '1') { echo "checked";} else {}?>
+                                            <?php if ($encounter->isComplete == '1') { echo "checked";} else { echo "disabled"; }?>
                                             >
                                             <label class="form-check-label" for="yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="Complete" id="no" value="no" <?php if ($encounter->isComplete == '0') { echo "checked";} else {}?>>
+                                            <input class="form-check-input" type="radio" name="Complete" id="no" value="no" <?php if ($encounter->isComplete == '0') { echo "checked";} else { echo "disabled"; }?>>
                                             <label class="form-check-label" for="no">No</label>
                                         </div>
                                     </div>
@@ -252,11 +252,11 @@
                                     <hr class="mt-0">
                                     <div class="col-12 mb-5">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="chronic" id="cyes" <?php if ($encounter->chronicPatient == true) { echo "checked";} else {}?> value="yes">
+                                            <input class="form-check-input" type="radio" name="chronic" id="cyes" <?php if ($encounter->chronicPatient == true) { echo "checked";} else { echo "disabled"; }?> value="yes">
                                             <label class="form-check-label" for="cyes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" <?php if ($encounter->chronicPatient == false) { echo "checked";} else {}?> name="chronic" id="cno" value="no">
+                                            <input class="form-check-input" type="radio" <?php if ($encounter->chronicPatient == false) { echo "checked";} else { echo "disabled"; }?> name="chronic" id="cno" value="no">
                                             <label class="form-check-label" for="cno">No</label>
                                         </div>
                                     </div>

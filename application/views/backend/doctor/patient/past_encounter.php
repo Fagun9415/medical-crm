@@ -3,39 +3,38 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="setting-info profile-info">
-                            <h5 class="mb-1 d-flex"><div class="col-12">Active Patients &nbsp;&nbsp;<a href="<?php echo base_url('doctor/Patient/add_new_patient'); ?>" class="btn btn-primary btn-add"><i class="feather-plus-square me-1"></i> Add New Patient</a></div></h5>
-                            <br>
+                            <h5 class="mb-1 d-flex">Past Encounter</h5>
+                            <!-- <br>
                             <form autocomplete="off" id="signupform">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Search Existing Patient</label>
-                                    <input type="text" class="form-control filterme" id="mobileno" placeholder="Enter Mobile Number" name="mobileno" maxlength="10" required>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Search Existing Patient</label>
+                                        <input type="text" class="form-control filterme" id="mobileno" placeholder="Enter Mobile Number" name="mobileno" maxlength="10" required>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="ajax-load1 text-center" style="display:none;">
+                                            <img src="<?php echo base_url('uploads/loader.gif');?>">
+                                        </div>
+                                        <div id="alert_message" ></div>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                    <a href="<?php echo base_url('doctor/Patient/active_patient'); ?>" class="btn btn-dark">Reset</a>
                                 </div>
-                                <div class="text-center">
-                                    <div class="ajax-load1 text-center" style="display:none;">
-                                          <img src="<?php echo base_url('uploads/loader.gif');?>">
-                                      </div>
-                                       <div id="alert_message" ></div>
-                                </div>
-                                <button class="btn btn-primary" type="submit">Search</button>
-                                <a href="<?php echo base_url('doctor/Patient/active_patient'); ?>" class="btn btn-dark">Reset</a>
-                            </div>
-                        </form>
-                            <br>    
+                            </form>
+                            <br>     -->
                             <hr class="mt-0">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="datatable table table-stripped" id="patient-table" style="width: ;100%">
+                                        <table class="datatable table table-stripped" id="patient-table">
                                             <thead >
                                                 <tr>
                                                 <th>ID</th>
-                                                <th>Patient Name</th>
-                                                <th>Patient Contact</th>
+                                                <th>Patient Info</th>
+                                                <th>Doctor Name</th>
+                                                <th>Doctor Contact</th>
                                                 <th>Consultant Date & Time</th>
-                                                <th>Payment</th>
                                                 <th>Action</th>
-                                                <th>Past Encounter</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -50,20 +49,7 @@
             </div>
         </div>
 <script src="<?php echo base_url('backend/assets/js/jquery-3.6.0.min.js'); ?>"></script>
-<script>
-        $('.filterme').keypress(function(eve) {
-        if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0)) {
-        eve.preventDefault();
-        }
 
-        // this part is when left part of number is deleted and leaves a . in the leftmost position. For example, 33.25, then 33 is deleted
-        $('.filterme').keyup(function(eve) {
-        if ($(this).val().indexOf('.') == 0) {
-        $(this).val($(this).val().substring(1));
-        }
-        });
-        });
-    </script>
 <script>
     $(document).ready(function(){
 
@@ -73,14 +59,14 @@
       function active_patient_data()
       {
         $(".ajax-load1").hide();
-        var mobileno = $('#mobileno').val();
-            
+        var patientId = '<?php echo $pid; ?>';
+         
         $('#patient-table').DataTable( {
                 "ajax" : {
-                    url:"<?php echo base_url('doctor/Patient/fetch_active_patient'); ?>",
+                    url:"<?php echo base_url('doctor/Patient/fetch_past_encounter'); ?>",
                     type:"POST",
                     data : {
-                        mobileno:mobileno
+                        patientId:patientId
                     },
                 },
                 "oLanguage": {
