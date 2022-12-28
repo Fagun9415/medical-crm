@@ -63,8 +63,8 @@
     $encounter = $details->encounter;
     $finalDiagnosis = $details->finalDiagnosis;
     $encounter_id = my_encrypt($encounter->id);
-
-
+    
+    $doctorLabReports = $details->doctorLabReports;
 
 ?>
 
@@ -155,7 +155,7 @@
                             <div class="col-12 row">
                                 <div class="col-12">
                                     <div class="row">
-                                    <div class="ajax-load1 text-center" style="display:none;">
+                                        <div class="ajax-load1 text-center" style="display:none;">
                                               <img src="<?php echo base_url('uploads/loader.gif');?>">
                                         </div>
                                        <div id="alert_message1" style="color:red;"></div>
@@ -294,6 +294,45 @@
                                             <label class="form-check-label" for="cno">No</label>
                                         </div>
                                     </div>
+                                    <h5 class="mb-1 d-flex">
+                                        <div class="col-6">Doctor Reports</div>
+                                        <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" onclick="addDoctotReport()" >New Report</button></div>
+                                    </h5>
+                                    <hr class="mt-0">
+                                    <div class="col-12 row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="ajax-load0 text-center" style="display:none;">
+                                                        <img src="<?php echo base_url('uploads/loader.gif');?>">
+                                                    </div>
+                                                    <div id="alert_message0" style="color:red;"></div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-borderless" id="doctor-report">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th>Test Name</th>
+                                                                    <th>Report</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php foreach ($doctorLabReports as $key1 => $value1) { 
+                                                                $doctorLabReports_id = my_encrypt($value1->id);
+                                                                ?>
+                                                                <tr>
+                                                                    <td><?php echo $value1->labTestName; ?></td>
+                                                                    <td><a href="<?php echo curisurl.$value1->labReport; ?>" download class="btn btn-success" ><i class="fa fa-download"></i></a></td>
+                                                                    <td><button type="button" class="btn btn-danger dreport" id="<?php echo $doctorLabReports_id; ?>"><i class="fa fa-trash"></i></button></td>
+                                                                </tr>
+                                                            <?php } ?>    
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <h5 class="mb-1">Payment Mode</h5>
                                     <hr class="mt-0">
                                     <div class="col-md-6 col-sm-12">
@@ -334,7 +373,7 @@
             </div>
         </div>
 
-<div class="modal fade contentmodal" id="addMedicine" tabindex="-1" aria-hidden="true">
+    <div class="modal fade contentmodal" id="addMedicine" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content doctor-profile">
                 <div class="modal-header">
@@ -570,6 +609,45 @@
                 })
             });
 
+            $(document).on('click','.dreport',function(){
+
+          
+            var id = $(this).attr('id');
+
+            $(".ajax-load0").show();
+            $('#alert_message0').html('');
+                $.ajax({
+                          url:"<?php echo base_url('doctor/Patient/delete_doctor_report'); ?>",
+                          method:"POST",
+                          cache: false,
+                          data : {id:id},
+                          success:function(data)
+                          {   
+                             $(".ajax-load0").hide();
+                                var res = JSON.parse(data);
+                                status = res.status;
+                                message = res.message;
+
+                                if(status == "success")
+                                {   
+                                    $('#alert_message0').html('<div class="text-center alert alert-success">'+message+'</div>');
+                                    location.reload();   
+                                }
+                                else if(status=="unsuccess")
+                                {   
+                                    $('#alert_message0').html('<div class="text-center alert alert-danger">'+message+'</div>');
+                                }
+                                else
+                                {
+
+                                }
+                                setInterval(function(){
+                                 $('#alert_message1').html('');
+                            }, 2000);
+                          }
+                })
+            });
+
 
             $(document).on('click','.final',function(){
 
@@ -702,6 +780,11 @@
             $("#test-table").append('<tr><td><input type="hidden" class="form-control floating" value="'+test_name+'" name="test[]">'+test_name+'</td><td><button type="button" class="btn btn-danger" onclick="return this.parentNode.parentNode.remove();"><i class="fa fa-trash"></i></button></td><tr>');
             $('#addLab').modal('hide');
         }
+
+        function addDoctotReport() {
+        $('#doctor-report').append('<tr><td><input type="text" name="dreportname[]" class="form-control" placeholder="Enter Test Name"></td><td><input type="file" name="labReport[]"class="form-control" ></td><td><button type="button" class="btn btn-danger" onclick="return this.parentNode.parentNode.remove();"><i class="fa fa-trash"></i></button></td></tr>')
+     }
+
         function addMedicine()
         {
             const drug_name = $("#drug-name").val();

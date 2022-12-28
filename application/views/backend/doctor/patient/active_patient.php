@@ -35,7 +35,6 @@
                                                 <th>Consultant Date & Time</th>
                                                 <th>Payment</th>
                                                 <th>Action</th>
-                                                <th>Past Encounter</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

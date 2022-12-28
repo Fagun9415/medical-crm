@@ -65,6 +65,7 @@
     $encounter_id = my_encrypt($encounter->id);
     $Referral = $details->referDoctor;
 
+    $doctorLabReports = $details->doctorLabReports;
 ?>
 
 
@@ -283,7 +284,36 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+                                    <h5 class="mb-1 d-flex">Doctor Reports</h5>
+                                    <hr class="mt-0">
+                                    <div class="col-12 row">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-borderless" id="doctor-report">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th>Test Name</th>
+                                                                    <th>Report</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <?php foreach ($doctorLabReports as $key1 => $value1) { 
+                                                                $doctorLabReports_id = my_encrypt($value1->id);
+                                                                ?>
+                                                                <tr>
+                                                                    <td><?php echo $value1->labTestName; ?></td>
+                                                                    <td><a href="<?php echo curisurl.$value1->labReport; ?>" download class="btn btn-success" ><i class="fa fa-download"></i></a></td>
+                                                                </tr>
+                                                            <?php } ?>    
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -53,197 +53,234 @@
  </style>
  <div class="page-wrapper">
      <div class="content container-fluid content-wrap">
-         <form id="encounterform" autocomplete="off">
+         <form id="encounterform" autocomplete="off" enctype="multipart/form-data">
              <input type="hidden" name="patientId" value="<?php echo $patient_id; ?>">
              <div class="row">
-                 <div class="col-md-12 col-sm-12">
-                     <div class="setting-info profile-info">
-                         <h5 class="mb-1">Disease Information</h5>
-                         <hr class="mt-0">
-                         <div class="row">
-                             <div class="col-md-6 col-sm-12">
-                                 <h5 class="mb-1">Encounter Date</h5>
-                                 <div class="form-group form-focus focused">
-                                     <input type="date" class="form-control floating" name="encounterDate">
-                                 </div>
-                             </div>
-                             <div class="col-md-6 col-sm-12">
-                                 <h5 class="mb-1">Chronic Illness</h5>
-                                 <div class="form-group">
-                                     <select class="form-control" multiple id="chronic-illness" name="chronicalIllness[]" data-placeholder="Chronic Illness">
-                                         <option value="None">None</option>
-                                         <option value="Diabetes">Diabetes</option>
-                                         <option value="Hypertension">Hypertension</option>
-                                         <option value="Kidney Disease">Kidney Disease</option>
-                                         <option value="Liver Disease">Liver Disease</option>
-                                         <option value="Other">Other</option>
-                                     </select>
-                                 </div>
-                             </div>
-                             <div class="col-md-6 col-sm-12">
-                                 <h5 class="mb-1">Chief Complaint</h5>
-                                 <div class="form-group">
-                                     <textarea class="form-control" name="chiefComplaint" placeholder="Chief Complaint" rows="4"></textarea>
-                                 </div>
-                             </div>
-                             <div class="col-md-6 col-sm-12">
-                                 <h5 class="mb-1">Other Symptoms</h5>
-                                 <div class="form-group">
-                                     <textarea class="form-control" name="otherSymptoms" placeholder="Other Symptoms" rows="4"></textarea>
-                                 </div>
-                             </div>
-                             <div class="col-12">
-                                 <h5 class="mb-1 d-flex">
-                                     <div class="col-6">Provisional Diagnosis</div>
-                                     <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProvisional">+ Add</button></div>
-                                 </h5>
-                                 <hr class="mt-0">
-                                 <div class="row">
-                                     <div class="col-12">
-                                         <div class="table-responsive">
-                                             <table class="table table-borderless" id="provisional-diagnosis-table">
-                                                 <thead class="thead-light">
-                                                     <tr>
-                                                         <th>Provisional Diagnosis</th>
-                                                         <th>Action</th>
-                                                     </tr>
-                                                 </thead>
-                                                 <tbody>
-                                                 </tbody>
-                                             </table>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="col-md-6 col-sm-12 mt-3">
-                     <div class="row">
-                         <h5 class="mb-1 d-flex">
-                             <div class="col-6">Lab Information</div>
-                             <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLab">Order New Lab</button></div>
-                         </h5>
-                         <hr class="mt-0">
-                         <div class="col-12 row">
-                             <div class="col-12">
-                                 <div class="row">
-                                     <div class="col-12">
-                                         <div class="table-responsive">
-                                             <table class="table table-borderless" id="test-table">
-                                                 <thead class="thead-light">
-                                                     <tr>
-                                                         <th>Test Name</th>
-                                                         <th>Action</th>
-                                                     </tr>
-                                                 </thead>
-                                                 <tbody>
-                                                 </tbody>
-                                             </table>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="setting-info profile-info">
+                        <h5 class="mb-1 d-flex">
+                                    <div class="col-6">Disease Information</div>
+                                    <div class="col-6" style="text-align: right;"><a href ="<?php echo base_url('doctor/Patient/past_encounter/').$patient_id;?>" target="_blank" class="btn btn-primary">View Past encounter</a></div>
+                                </h5>
+                        <h5 class="mb-1"></h5>
+                        <hr class="mt-0">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <h5 class="mb-1">Encounter Date</h5>
+                                <div class="form-group form-focus focused">
+                                    <input type="date" class="form-control floating" name="encounterDate">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h5 class="mb-1">Chronic Illness</h5>
+                                <div class="form-group">
+                                    <select class="form-control" multiple id="chronic-illness" name="chronicalIllness[]" data-placeholder="Chronic Illness">
+                                        <option value="None">None</option>
+                                        <option value="Diabetes">Diabetes</option>
+                                        <option value="Hypertension">Hypertension</option>
+                                        <option value="Kidney Disease">Kidney Disease</option>
+                                        <option value="Liver Disease">Liver Disease</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h5 class="mb-1">Chief Complaint</h5>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="chiefComplaint" placeholder="Chief Complaint" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <h5 class="mb-1">Other Symptoms</h5>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="otherSymptoms" placeholder="Other Symptoms" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h5 class="mb-1 d-flex">
+                                    <div class="col-6">Provisional Diagnosis</div>
+                                    <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProvisional">+ Add</button></div>
+                                </h5>
+                                <hr class="mt-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless" id="provisional-diagnosis-table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Provisional Diagnosis</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 mt-3">
+                    <div class="row">
+                        <h5 class="mb-1 d-flex">
+                            <div class="col-6">Lab Information</div>
+                            <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLab">Order New Lab</button></div>
+                        </h5>
+                        <hr class="mt-0">
+                        <div class="col-12 row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless" id="test-table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Test Name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                 <div class="col-md-6 col-sm-12 mt-3">
-                     <div class="row">
-                         <h5 class="mb-1 d-flex">
-                             <div class="col-6">Medicine Information</div>
-                             <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMedicine">Order New Pharmacy</button></div>
-                         </h5>
-                         <hr class="mt-0">
-                         <div class="col-12">
-                             <div class="col-12">
-                                 <div class="row">
-                                     <div class="table-responsive">
-                                         <table class="table table-borderless" id="medicine-table">
-                                             <thead class="thead-light">
-                                                 <tr>
-                                                     <th>Drug Name</th>
-                                                     <th>Morning</th>
-                                                     <th>Afternoon</th>
-                                                     <th>Evening</th>
-                                                     <th>Night</th>
-                                                     <th>Comment</th>
-                                                     <th>Days</th>
-                                                     <th>Action</th>
-                                                 </tr>
-                                             </thead>
-                                             <tbody>
-                                             </tbody>
-                                         </table>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                <div class="col-md-6 col-sm-12 mt-3">
+                    <div class="row">
+                        <h5 class="mb-1 d-flex">
+                            <div class="col-6">Medicine Information</div>
+                            <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMedicine">Order New Pharmacy</button></div>
+                        </h5>
+                        <hr class="mt-0">
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless" id="medicine-table">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Drug Name</th>
+                                                    <th>Morning</th>
+                                                    <th>Afternoon</th>
+                                                    <th>Evening</th>
+                                                    <th>Night</th>
+                                                    <th>Comment</th>
+                                                    <th>Days</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                 <div class="col-md-6 col-sm-12 mt-3">
-                     <div class="row">
-                         <h5 class="mb-1">Is Referral?</h5>
-                         <hr class="mt-0">
-                         <div class="col-12 mb-3">
-                             <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="Referral" id="yes" value="yes">
-                                 <label class="form-check-label" for="yes">Yes</label>
-                             </div>
-                             <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="Referral" id="no" value="no">
-                                 <label class="form-check-label" for="no">No</label>
-                             </div>
-                             <div class="row mt-3" id="referral-data" style="display: none;">
-                                 <div class="col-12">
-                                     <div class="form-group form-focus">
-                                         <input type="text" class="form-control floating" id="doctor-name" name="doctorName">
-                                         <label class="focus-label">Doctor Name<span class="text-danger"></span></label>
-                                     </div>
-                                 </div>
-                                 <div class="col-12">
-                                     <div class="form-group form-focus">
-                                         <input type="number" class="form-control floating filterme" id="doctor-contact-number" name="doctorPhoneNo">
-                                         <label class="focus-label">Doctor Contact Number<span class="text-danger"></span></label>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                         <h5 class="mb-1">Is It Chronic Patient?</h5>
-                         <hr class="mt-0">
-                         <div class="col-12">
-                             <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="chronicPatient" id="cyes" value="true">
-                                 <label class="form-check-label" for="cyes">Yes</label>
-                             </div>
-                             <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="chronicPatient" id="cno" value="false">
-                                 <label class="form-check-label" for="cno">No</label>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                <div class="col-md-6 col-sm-12 mt-3">
+                    <div class="row">
+                        <h5 class="mb-1">Is Referral?</h5>
+                        <hr class="mt-0">
+                        <div class="col-12 mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="Referral" id="yes" value="yes">
+                                <label class="form-check-label" for="yes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="Referral" id="no" value="no">
+                                <label class="form-check-label" for="no">No</label>
+                            </div>
+                            <div class="row mt-3" id="referral-data" style="display: none;">
+                                <div class="col-12">
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" id="doctor-name" name="doctorName">
+                                        <label class="focus-label">Doctor Name<span class="text-danger"></span></label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group form-focus">
+                                        <input type="number" class="form-control floating filterme" id="doctor-contact-number" name="doctorPhoneNo">
+                                        <label class="focus-label">Doctor Contact Number<span class="text-danger"></span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mb-1">Is It Chronic Patient?</h5>
+                        <hr class="mt-0">
+                        <div class="col-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="chronicPatient" id="cyes" value="true">
+                                <label class="form-check-label" for="cyes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="chronicPatient" id="cno" value="false">
+                                <label class="form-check-label" for="cno">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                 <div class="col-md-6 col-sm-12 mt-3">
-                     <h5 class="mb-1">Payment Mode</h5>
-                     <hr class="mt-0">
-                     <div class="col-md-6 col-sm-12">
-                         <div class="form-group">
-                             <input type="text" class="form-control floating filterme" name="totalPayment" placeholder="Amount" id="doctor-name">
-                         </div>
-                     </div>
-                     <div class="col-md-6 col-sm-12">
-                         <div class="form-check form-check-inline">
-                             <input class="form-check-input" type="radio" name="paymentMode" id="cash" value="cash">
-                             <label class="form-check-label" for="cash">Cash</label>
-                         </div>
-                         <div class="form-check form-check-inline">
-                             <input class="form-check-input" type="radio" name="paymentMode" id="online" value="online">
-                             <label class="form-check-label" for="online">Online</label>
-                         </div>
-                     </div>
-                 </div>
+                <div class="col-md-6 col-sm-12 mt-3">
+                    <div class="col-md-12 col-sm-12 mt-3">
+                        <div class="row">
+                            <h5 class="mb-1 d-flex">
+                                <div class="col-6">Doctor Reports</div>
+                                <div class="col-6" style="text-align: right;"><button type="button" class="btn btn-primary" onclick="addDoctotReport()" >New Report</button></div>
+                            </h5>
+                            <hr class="mt-0">
+                            <div class="col-12 row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless" id="doctor-report">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>Test Name</th>
+                                                            <th>Report</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 mt-3">
+                        <h5 class="mb-1">Payment Mode</h5>
+                        <hr class="mt-0">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control floating filterme" name="totalPayment" placeholder="Amount" id="doctor-name">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="paymentMode" id="cash" value="cash">
+                                <label class="form-check-label" for="cash">Cash</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="paymentMode" id="online" value="online">
+                                <label class="form-check-label" for="online">Online</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
              </div>
              <div class="row mt-auto">
                  <div class="col-md-12">
@@ -335,7 +372,7 @@
                      <div class="add-wrap">
                          <div class="form-group form-focus">
                              <input type="text" class="form-control floating testauto" id="test-name">
-                             <label class="focus-label">Test Name<span class="text-danger"></span></label>
+                             <label class="focus-label">Test Name<span class="text-danger"></span></label>  
                          </div>
                      </div>
                  </div>
@@ -445,7 +482,7 @@
          frm.submit(function(e) {
              e.preventDefault();
 
-
+            
              $(".ajax-load1").show();
 
              var formData = new FormData($(this)[0]);
@@ -493,6 +530,11 @@
          $("#test-name").val('');
          $("#test-table").append('<tr><td><input type="hidden" class="form-control floating" value="' + test_name + '" name="test[]">' + test_name + '</td><td><button type="button" class="btn btn-danger" onclick="return this.parentNode.parentNode.remove();"><i class="fa fa-trash"></i></button></td><tr>');
          $('#addLab').modal('hide');
+     }
+     
+
+     function addDoctotReport() {
+        $('#doctor-report').append('<tr><td><input type="text" name="dreportname[]" class="form-control" placeholder="Enter Test Name"></td><td><input type="file" name="labReport[]"class="form-control" ></td><td><button type="button" class="btn btn-danger" onclick="return this.parentNode.parentNode.remove();"><i class="fa fa-trash"></i></button></td></tr>')
      }
 
      function addMedicine() {

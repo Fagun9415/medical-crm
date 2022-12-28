@@ -193,8 +193,6 @@ class Patient  extends CI_Controller {
                     $sub_array[] = ucwords($payment);
                     $sub_array[] = '<a href="'. base_url('doctor/Patient/edit_patient/').$encounter_id.'" class="btn btn-secondary">
                                                     Edit Patient</a>';
-                    $sub_array[] = '<a href="'. base_url('doctor/Patient/past_encounter/').$patientId.'" class="btn btn-secondary">
-                                                    View</a>';
 
                     $data[] = $sub_array;
                     $i++;
@@ -237,79 +235,6 @@ class Patient  extends CI_Controller {
             redirect('doctor/Auth/logout', 'refresh');
         }	
 
-	}
-
-	public function fetch_past_encounter()
-	{	
-		if ($this->session->userdata('logged_in_doctor')) 
-        {   
-            $token = $this->session->userdata('logged_in_doctor')['token'];	
-			
-
-			
-				$data_value = [
-                'patientId' => "11" 
-            	];
-			
-
-			
-
-            $formdata = json_encode($data_value);
-
-            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
-
-            $result = methodPost('api/doctors/past10EncounterOfPatient', $header, $formdata);
-            $requestlist = json_decode($result);
-
-            $patient = $requestlist->data;
-            $patientdetail = $patient->patient;
-            $encountersDetail = $patient->encounters;
-			
-            if (!empty($patient)) 
-            {	
-				
-				$data = [];
-            	$i=1;
-				
-                foreach ($encountersDetail as $key => $row) {
-					
-					$doctordetails = $row->doctor;
-					$encountersId = my_encrypt($row->id);
-
-                 	
-
-                    $sub_array = [];
-                    $sub_array[] = '#'.$i;
-                    $sub_array[] = $patientdetail->name.'<br>'.$patientdetail->email.'<br>(+'.$patientdetail->phoneCode.') '.$patientdetail->phoneNo;
-                    $sub_array[] = $doctordetails->name .'<br>'.$doctordetails->hospitalName;
-                    $sub_array[] = $doctordetails->email.'<br>'.$doctordetails->doctorPhoneNo;
-                   
-                    $sub_array[] = date('d-m-Y',strtotime($row->encounterDate)).'<br>Updated at : '.date('d-m-Y',strtotime($row->updatedAt));
-             
-                    $sub_array[] = '<a href="'. base_url('doctor/Patient/past_patient_detail/').$encountersId.'" class="btn btn-secondary">
-                                                    View</a>';
-
-                    $data[] = $sub_array;
-                    $i++;
-
-                }
-
-                $output = [
-                    "data" => $data,
-                ];
-            }
-            else
-            {
-            	$output = [
-                    "data" => [],
-                ];
-            }	
-            echo json_encode($output);
-		} 
-        else 
-        {
-            redirect('doctor/Auth/logout', 'refresh');
-        }	
 	}
 
 	public function past_patient()
@@ -539,7 +464,7 @@ class Patient  extends CI_Controller {
                     $sub_array[] = $p->email.'<br>(+'.$p->phoneCode.') '.$p->phoneNo;
                     $sub_array[] = date('d-m-Y',strtotime($row->encounterDate)).'<br>Updated at : '.date('d-m-Y',strtotime($row->updatedAt));
                     $sub_array[] = ucwords($payment);
-                    $sub_array[] = '<a href="'. base_url('doctor/Patient/chronic_patient_detail/').$encounter_id.'" class="btn btn-secondary">View</a>';
+                    $sub_array[] = '<a href="'. base_url('doctor/Patient/chronic_patient_detail/').$encounter_id.'" class="btn btn-secondary" >View</a>';
 
                     $data[] = $sub_array;
                     $i++;
@@ -669,6 +594,7 @@ class Patient  extends CI_Controller {
 			$night = $_POST['night'];
 			$comment = $_POST['comment'];
 			$noOfDays = $_POST['noOfDays'];
+			$doctorReportName = $_POST['dreportname'];
 
 
 
@@ -686,6 +612,26 @@ class Patient  extends CI_Controller {
 					'noOfDays' => $noOfDays[$i]
 				); 	 	
 			}
+
+			if (count($_FILES['labReport']['name']) > 0) {
+				# code...
+				
+				$files1 = array();
+				foreach ($_FILES["labReport"]["error"] as $key1 => $error1) {
+					if ($error1 == UPLOAD_ERR_OK) {
+						$files1["files[$key1]"] = curl_file_create(
+
+							$_FILES['labReport']['tmp_name'][$key1],
+							$_FILES['labReport']['type'][$key1],
+							$_FILES['labReport']['name'][$key1]
+						);
+
+					}
+				}
+			}else{
+				$files1 = [];
+			}
+
 
 				if ($isReferral == 'yes') 
 				{
@@ -752,7 +698,7 @@ class Patient  extends CI_Controller {
 
 				if (empty($finalDiagnosis)) 
 				{
-					$fd = [];
+					$fd = array();
 				}
 				else
 				{
@@ -763,26 +709,27 @@ class Patient  extends CI_Controller {
 			
 				$data_value = array(
 				'encounterId' => $encounterId,	
+				'doctorLabTestName' => json_encode($doctorReportName),
 				'isReferral' => $rrr,
 				'chronicPatient' => $crop,
 				'totalPayment' => $totalPayment,
-				'provisionalDiagnosis' => $pd,
-				'labTestName' => $ltn,
-				'medicinesDetail' => $mdd,
+				"finalDiagnosis" => json_encode($fd),
+				'provisionalDiagnosis' => json_encode($pd),
+				'labTestName' => json_encode($ltn),
+				'medicinesDetail' => json_encode($mdd),
 				'doctorName' => $doctorName,
 				'doctorPhoneCode' => '91',
 				'doctorPhoneNo' => $doctorPhoneNo,
 				'paymentMode' => $paymentMode, 
 				'isComplete' => $is_complet,
 				'symptomsResolved' => $sr,
-				'finalDiagnosis' => $fd
 				);
 			
 				
+				
+			$final_data = $data_value + $files1 ;
 
-			$final_data = json_encode($data_value);
-
-			$header = ["authorization: Bearer " . $token, "content-type: application/json"];
+			$header = ["authorization: Bearer " . $token];
 			$result = methodPost('api/doctors/updateEncounter', $header, $final_data);
 	        $result_array = json_decode($result);
 	        
@@ -939,6 +886,43 @@ class Patient  extends CI_Controller {
         }	
 	}
 
+	public function delete_doctor_report()
+	{	
+		if ($this->session->userdata('logged_in_doctor')) 
+        { 	
+			$token = $this->session->userdata('logged_in_doctor')['token'];	
+			$id = my_decrypt($_POST['id']);
+			
+			$data_value = [
+					'doctorLabReportId' => $id,
+	            ];
+				$formdata = json_encode($data_value);
+				
+	        $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+
+	        $result = methodPost('api/doctors/deleteDoctorLabReportById', $header, $formdata);
+	        $result_array = json_decode($result);
+
+	        $error = $result_array->error;
+	        $message = $result_array->message;
+	        $status = $result_array->status;
+
+	        if ($status == 200) 
+	        {
+	            $data['status'] = "success";
+	            $data['message'] = $message;
+	        } else {
+	            $data['status'] = "unsuccess";
+	            $data['message'] = $message;
+	        }
+	        echo json_encode($data);	
+		} 
+        else 
+        {
+            redirect('doctor/Auth/logout', 'refresh');
+        }	
+	}
+
 
 	public function fetch_patient_relation()
 	{	
@@ -981,6 +965,8 @@ class Patient  extends CI_Controller {
                         $patient_id .
                         '" class="btn btn-primary">Add New Encounter</a>
                         ';
+					$sub_array[] = '<a href="'. base_url('doctor/Patient/past_encounter/').$patient_id.'" class="btn btn-primary" target="_blank">
+                                                    View Past Encounter</a>';
 
                     $data[] = $sub_array;
 
@@ -1004,7 +990,78 @@ class Patient  extends CI_Controller {
         }	
 	}
 
+	public function fetch_past_encounter()
+	{	
+		if ($this->session->userdata('logged_in_doctor')) 
+        {   
+            $token = $this->session->userdata('logged_in_doctor')['token'];	
+			
 
+			
+				$data_value = [
+                'patientId' => my_decrypt($_POST['patientId']) 
+            	];
+			
+
+			
+
+            $formdata = json_encode($data_value);
+
+            $header = ["authorization: Bearer " . $token, "content-type: application/json"];
+
+            $result = methodPost('api/doctors/past10EncounterOfPatient', $header, $formdata);
+            $requestlist = json_decode($result);
+
+            $patient = $requestlist->data;
+            $patientdetail = $patient->patient;
+            $encountersDetail = $patient->encounters;
+			
+            if (!empty($patient)) 
+            {	
+				
+				$data = [];
+            	$i=1;
+				
+                foreach ($encountersDetail as $key => $row) {
+					
+					$doctordetails = $row->doctor;
+					$encountersId = my_encrypt($row->id);
+
+                 	
+
+                    $sub_array = [];
+                    $sub_array[] = '#'.$i;
+                    $sub_array[] = $patientdetail->name.'<br>'.$patientdetail->email.'<br>(+'.$patientdetail->phoneCode.') '.$patientdetail->phoneNo;
+                    $sub_array[] = $doctordetails->name .'<br>'.$doctordetails->hospitalName;
+                    $sub_array[] = $doctordetails->email.'<br>'.$doctordetails->doctorPhoneNo;
+                   
+                    $sub_array[] = date('d-m-Y',strtotime($row->encounterDate)).'<br>Updated at : '.date('d-m-Y',strtotime($row->updatedAt));
+             
+                    $sub_array[] = '<a href="'. base_url('doctor/Patient/past_patient_detail/').$encountersId.'" class="btn btn-primary">
+                                                    View</a>';
+
+                    $data[] = $sub_array;
+                    $i++;
+
+                }
+
+                $output = [
+                    "data" => $data,
+                ];
+            }
+            else
+            {
+            	$output = [
+                    "data" => [],
+                ];
+            }	
+            echo json_encode($output);
+		} 
+        else 
+        {
+            redirect('doctor/Auth/logout', 'refresh');
+        }	
+	}
 
 	public function patientlist($mobileno)
 	{	
@@ -1055,20 +1112,43 @@ class Patient  extends CI_Controller {
 			$comment = $_POST['comment'];
 			$noOfDays = $_POST['noOfDays'];
 			$chronicalIllnessimplode = implode(",",$chronicalIllness);
-		
-			for ($i=0; $i <count($drug_name) ; $i++) 
-			{ 
-				$medicinesDetail[] = array
-				(
-					'drugName' => $drug_name[$i],
-					'morning' => $morning[$i],
-					'afternoon' => $afternoon[$i],
-					'evening' => $evening[$i],
-					'night' => $night[$i],
-					'comment' => $comment[$i],
-					'noOfDays' => $noOfDays[$i]
-				); 	 	
+			$doctorReportName = $_POST['dreportname'];
+
+
+
+			// $doctorReport = array();
+			if (count($_FILES['labReport']['name']) > 0) {
+				# code...
+				
+				$files1 = array();
+				foreach ($_FILES["labReport"]["error"] as $key1 => $error1) {
+					if ($error1 == UPLOAD_ERR_OK) {
+						$files1["files[$key1]"] = curl_file_create(
+
+							$_FILES['labReport']['tmp_name'][$key1],
+							$_FILES['labReport']['type'][$key1],
+							$_FILES['labReport']['name'][$key1]
+						);
+
+					}
+				}
+			}else{
+				$files1 = [];
 			}
+			
+				for ($i=0; $i <count($drug_name) ; $i++) 
+				{ 
+					$medicinesDetail[] = array
+					(
+						'drugName' => $drug_name[$i],
+						'morning' => $morning[$i],
+						'afternoon' => $afternoon[$i],
+						'evening' => $evening[$i],
+						'night' => $night[$i],
+						'comment' => $comment[$i],
+						'noOfDays' => $noOfDays[$i]
+					); 	 	
+				}
 
 				if ($isReferral == 'yes') 
 				{
@@ -1126,6 +1206,7 @@ class Patient  extends CI_Controller {
 
 			
 				$data_value = array(
+				'doctorLabTestName' => json_encode($doctorReportName),
 				'patientId' => $patientId,	
 				'encounterDate' => $encounterDate,
 				'chronicalIllness' => $chronicalIllnessimplode,
@@ -1134,20 +1215,21 @@ class Patient  extends CI_Controller {
 				'isReferral' => $rrr,
 				'chronicPatient' => $crop,
 				'totalPayment' => $totalPayment,
-				'provisionalDiagnosis' => $pd,
-				'labTestName' => $ltn,
-				'medicinesDetail' => $mdd,
+				'provisionalDiagnosis' => json_encode($pd),
+				'labTestName' => json_encode($ltn),
+				'medicinesDetail' => json_encode($mdd),
 				'doctorName' => $doctorName,
 				'doctorPhoneCode' => '91',
 				'doctorPhoneNo' => $doctorPhoneNo,
-				'paymentMode' => $paymentMode 
+				'paymentMode' => $paymentMode,
 				);
-			$final_data = json_encode($data_value);
 
-			$header = ["authorization: Bearer " . $token, "content-type: application/json"];
-			$result = methodPost('api/doctors/createEncounter', $header, $final_data);
-	        $result_array = json_decode($result);
 
+				$final_data = $data_value + $files1 ;
+				$header = ["authorization: Bearer " . $token];
+				$result = methodPost('api/doctors/createEncounter', $header, $final_data);
+				$result_array = json_decode($result);
+			
 
 	        $error = $result_array->error;
 	        $message = $result_array->message;

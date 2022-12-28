@@ -16,6 +16,7 @@
                                                     <th>Gender</th>
                                                     <th>Relation</th>
                                                     <th>Action</th>
+													<th>Past Encounter</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
