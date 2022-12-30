@@ -31,7 +31,12 @@ $user = $this->session->userdata('logged_in_patient')['profile'];
     <link rel="stylesheet" href="<?php echo base_url('backend/assets/plugins/datatables/datatables.min.css'); ?>">
     <link rel="stylesheet" href="<?php  echo base_url('backend/assets/code/css/jquery.ccpicker.css'); ?>">
   
-
+    <style>
+        .user-menu.nav > li > a {
+            font-size: 15px;
+            line-height: 60px;
+        }
+    </style>
 
 
 </head>
@@ -65,7 +70,7 @@ $user = $this->session->userdata('logged_in_patient')['profile'];
             <ul class="nav nav-tabs user-menu">
 
 				<h6>Let Local Live</h6>	
-                <li class="nav-item dropdown noti-nav">
+                <!-- <li class="nav-item dropdown noti-nav">
                     <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <i class="feather-bell"></i> <span class="badge"></span>
                     </a>
@@ -135,7 +140,7 @@ $user = $this->session->userdata('logged_in_patient')['profile'];
                             </ul>
                         </div>
                     </div>
-                </li>
+                </li> -->
 
 
                 <li class="nav-item dropdown main-drop">
