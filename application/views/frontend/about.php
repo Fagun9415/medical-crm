@@ -36,46 +36,6 @@
                                 <h2>Our motto is simple "Let Local Live".</h2>
                                 <p >Online retailers are good for everyone and offer services but that should not be at the expense of your local businesses.<br>This website offers local healthcare setups to come on an ecommerce/e-healthcare platform to offer their services to their neighbors as they have always done for many years but just with the convenience of online interaction.<br>Key objective of this site is to enable digitalization of patient health information and maintain it on single channel to enable right support for patient at all times. The data portability and security will allow the patients, doctors, pharmacies and labs to join the digital India revolution which will enable better treatment and health support to patient.</p>
                                 </div>
-                                <div class="row justify-content-center">
-                                    <div class="feature-col-list">
-                                        <div class="feature-col">
-                                            <div class="feature-subox d-flex flex-wrap justify-content-center">
-                                                <img src="<?php echo base_url('frontend/assets/img/features/feature-07.jpg'); ?>" class="img-fluid" alt="Features">
-                                                <h4>Operation</h4>
-                                            </div>
-                                        </div>
-                                        <div class="feature-col">
-                                            <div class="feature-subox d-flex flex-wrap justify-content-center">
-                                                <img src="<?php echo base_url('frontend/assets/img/features/feature-09.jpg'); ?>" class="img-fluid" alt="Features">
-                                                <h4>Medical</h4>
-                                            </div>
-                                        </div>
-                                        <div class="feature-col">
-                                            <div class="feature-subox d-flex flex-wrap justify-content-center">
-                                                <img src="<?php echo base_url('frontend/assets/img/features/feature-08.jpg'); ?>" class="img-fluid" alt="Features">
-                                                <h4>Patient Ward</h4>
-                                            </div>
-                                        </div>
-                                        <div class="feature-col">
-                                            <div class="feature-subox d-flex flex-wrap justify-content-center">
-                                                <img src="<?php echo base_url('frontend/assets/img/features/feature-10.jpg'); ?>" class="img-fluid" alt="Features">
-                                                <h4>Test Room</h4>
-                                            </div>
-                                        </div>
-                                        <div class="feature-col">
-                                            <div class="feature-subox d-flex flex-wrap justify-content-center">
-                                                <img src="<?php echo base_url('frontend/assets/img/features/feature-11.jpg'); ?>" class="img-fluid" alt="Features">
-                                                <h4>ICU</h4>
-                                            </div>
-                                        </div>
-                                        <div class="feature-col">
-                                            <div class="feature-subox d-flex flex-wrap justify-content-center">
-                                                <img src="<?php echo base_url('frontend/assets/img/features/feature-12.jpg'); ?>" class="img-fluid" alt="Features">
-                                                <h4>Laboratory</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </section>
 
@@ -86,61 +46,5 @@
                                     <p class="sub-title"><b>We plan to achieve a lot but want to start small... One Step at a time.</b><br>All business will work as an independent as they had always done before but will get the opportunity to stand up and compete with the online retailers. We do not decide the services or prices, the businesses will decide what works for them with complete transparency to patient.<br><center><b>Let Local Live.</b></center></p>
 									
                                     </div>
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-9">
-
-                                            <div class="specialities-slider slider">
-
-                                                <div class="speicality-item text-center">
-                                                    <div class="speicality-img">
-                                                        <img src="<?php echo base_url('frontend/assets/img/specialities/specialities-01.png'); ?>" class="img-fluid"
-                                                        alt="Speciality">
-                                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                    </div>
-                                                    <p>Urology</p>
-                                                </div>
-
-
-                                                <div class="speicality-item text-center">
-                                                    <div class="speicality-img">
-                                                        <img src="<?php echo base_url('frontend/assets/img/specialities/specialities-02.png'); ?>" class="img-fluid"
-                                                        alt="Speciality">
-                                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                    </div>
-                                                    <p>Neurology</p>
-                                                </div>
-
-
-                                                <div class="speicality-item text-center">
-                                                    <div class="speicality-img">
-                                                        <img src="<?php echo base_url('frontend/assets/img/specialities/specialities-03.png'); ?>" class="img-fluid"
-                                                        alt="Speciality">
-                                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                    </div>
-                                                    <p>Orthopedic</p>
-                                                </div>
-
-
-                                                <div class="speicality-item text-center">
-                                                    <div class="speicality-img">
-                                                        <img src="<?php echo base_url('frontend/assets/img/specialities/specialities-04.png'); ?>" class="img-fluid"
-                                                        alt="Speciality">
-                                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                    </div>
-                                                    <p>Cardiologist</p>
-                                                </div>
-
-
-                                                <div class="speicality-item text-center">
-                                                    <div class="speicality-img">
-                                                        <img src="<?php echo base_url('frontend/assets/img/specialities/specialities-05.png'); ?>" class="img-fluid"
-                                                        alt="Speciality">
-                                                        <span><i class="fa fa-circle" aria-hidden="true"></i></span>
-                                                    </div>
-                                                    <p>Dentist</p>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
-                                </div>
                             </section>

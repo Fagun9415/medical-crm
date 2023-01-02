@@ -6,7 +6,7 @@
 function methodPost($method,$header,$parameters){
 	
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 	
 	$curl = curl_init();
 
@@ -41,7 +41,7 @@ function methodPost($method,$header,$parameters){
 function methodGet($method,$token){
 
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 
 	$curl = curl_init();
 
@@ -74,7 +74,7 @@ function methodGet($method,$token){
 
 function methodPatch($method,$header,$parameters){
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 	
 	$curl = curl_init();
 
@@ -105,7 +105,7 @@ function methodPatch($method,$header,$parameters){
 
 function methodDelete($method,$header){
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
@@ -137,7 +137,7 @@ function methodDelete($method,$header){
 function methodPut($method,$header,$parameters){
 	
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 	
 	$curl = curl_init();
 
@@ -171,7 +171,7 @@ function methodPut($method,$header,$parameters){
 function methodGetwithparm($method,$header,$parameters){
 	
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
@@ -205,7 +205,7 @@ function methodGetwithparm($method,$header,$parameters){
 
 function methodDeletewithparm($method,$header,$parameters){
 	$port = "7081";
-	$base_url = "http://174.138.21.74/";
+	$base_url = "http://54.85.10.92/";
 	
 
 	$curl = curl_init();

@@ -3,93 +3,93 @@
             <div class="footer-top aos" data-aos="fade-up">
                 <div class="container">
                     <div class="row">
-        
-                        <div class="col-lg-2 col-md-6">
-        
-                            <div class="footer-widget footer-menu">
-                                <h2 class="footer-title">Know Us</h2>
-                                <ul>
-                                    <li><a href="<?php echo base_url('About'); ?>" target="_blank">About</a>
-		                            </li>
-		                            <li><a href="<?php echo base_url('Contact'); ?>" target="_blank">Contact</a>
-		                            </li>
-                                </ul>
-                            </div>
-        
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-        
-                            <div class="footer-widget footer-menu">
-                                <h2 class="footer-title">For Patients</h2>
-                                <ul>
-                                    <li><a href="patient/login.html">Login</a>
-                                    </li>
-                                    <li><a href="patient/register.html">Register</a>
-                                    </li>
-                                </ul>
-                            </div>
-        
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-        
-                            <div class="footer-widget footer-menu">
-                                <h2 class="footer-title">For Doctors</h2>
-                                <ul>
-                                    <li><a href="doctor/login.html">Login</a>
-                                    </li>
-                                    <li><a href="doctor/register.html">Register</a>
-                                    </li>
-                                </ul>
-                            </div>
-        
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-        
-                            <div class="footer-widget footer-menu">
-                                <h2 class="footer-title">For Pharmacy</h2>
-                                <ul>
-                                    <li><a href="pharmacy/login.html">Login</a>
-                                    </li>
-                                    <li><a href="pharmacy/register.html">Register</a>
-                                    </li>
-                                </ul>
-                            </div>
-        
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-        
-                            <div class="footer-widget footer-menu">
-                                <h2 class="footer-title">For Lab</h2>
-                                <ul>
-                                    <li><a href="lab/login.html">Login</a>
-                                    </li>
-                                    <li><a href="lab/register.html">Register</a>
-                                    </li>
-                                </ul>
-                            </div>
-        
-                        </div>
-        
-                        <div class="col-lg-2 col-md-6">
-        
-                            <div class="footer-widget footer-menu">
-                                <h2 class="footer-title">Connect</h2>
-                                <div class="social-icon">
-                                    <ul>
-                                        <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-facebook"></i> </a>
-                                        </li>
-                                        <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-linkedin"></i></a>
-                                        </li>
-                                        <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-instagram"></i></a>
-                                        </li>
-                                        <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-twitter"></i> </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-        
+
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">Know Us</h2>
+                        <ul>
+                            <li><a href="<?php echo base_url('About'); ?>" target="_blank">About</a>
+                            </li>
+                            <li><a href="<?php echo base_url('Contact'); ?>" target="_blank">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">For Patients</h2>
+                        <ul>
+                            <li><a href="<?php echo base_url('patient/Auth/login'); ?>" target="_blank">Login</a>
+                            </li>
+                            <li><a href="<?php echo base_url('patient/Auth/register'); ?>" target="_blank">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">For Doctors</h2>
+                        <ul>
+                            <li><a href="<?php echo base_url('doctor/Auth/login'); ?>" target="_blank">Login</a>
+                            </li>
+                            <li><a href="<?php echo base_url('doctor/Auth/register'); ?>" target="_blank">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">For Pharmacy</h2>
+                        <ul>
+                            <li><a href="<?php echo base_url('pharmacy/Auth/login'); ?>" target="_blank">Login</a>
+                            </li>
+                            <li><a href="<?php echo base_url('pharmacy/Auth/register'); ?>" target="_blank">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">For Lab</h2>
+                        <ul>
+                            <li><a href="<?php echo base_url('lab/Auth/login'); ?>" target="_blank">Login</a>
+                            </li>
+                            <li><a href="<?php echo base_url('lab/Auth/register'); ?>" target="_blank">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">Connect</h2>
+                        <div class="social-icon">
+                            <ul>
+                                <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-facebook"></i> </a>
+                                </li>
+                                <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-instagram"></i></a>
+                                </li>
+                                <li><a href="javascript:void(0)" target="_blank"><i class="fab fa-twitter"></i> </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+
+                </div>
+            </div>
                 </div>
             </div>
         
@@ -109,11 +109,10 @@
 
                             <div class="copyright-menu">
                                 <ul class="policy-menu">
-                                    <li><a href="<?php echo base_url('Terms_and_Conditions'); ?>">Terms and Conditions</a>
-	                                </li>
-	                                <li><a href="<?php echo base_url('Privacy_Policy'); ?>">Privacy Policy</a>
-	                                </li>
-                                </ul>
+                                <li><a href="<?php echo base_url('uploads/Terms and Conditions.pdf'); ?>" target=”_blank”>Terms and Conditions</a>
+                                </li>
+
+                            </ul>
                             </div>
 
                         </div>

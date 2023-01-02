@@ -10877,12 +10877,13 @@ ul.benifits-col li i{
 -----------------------*/
 
 .about-section {
-	background: url(../img/about-bg.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	padding: 50px 0;
-	min-height: 700px;
+	
+	background: url(../../../uploads/aboutproccess.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 50% 50%;
+    padding: 50px 0;
+    min-height: 700px;
 }
 .about-titile {
 	font-size: 15px;
