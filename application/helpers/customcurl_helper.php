@@ -1,26 +1,27 @@
-<?php 
+<?php
 
 
 
 
-function methodPost($method,$header,$parameters){
-	
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
-	
+function methodPost($method, $header, $parameters)
+{
+
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
+
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 30,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "POST",
-	  CURLOPT_POSTFIELDS => $parameters,
-	  CURLOPT_HTTPHEADER => $header,
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => $parameters,
+		CURLOPT_HTTPHEADER => $header,
 	));
 
 	$response = curl_exec($curl);
@@ -31,32 +32,34 @@ function methodPost($method,$header,$parameters){
 	curl_close($curl);
 
 	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
+		echo "cURL Error #:" . $err;
+		exit;
 	} else {
-	  return $response;
+		return $response;
 	}
 }
 
 
-function methodGet($method,$token){
+function methodGet($method, $token)
+{
 
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
 
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 30,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "GET",
-	  CURLOPT_HTTPHEADER => array(
-	    "authorization: Bearer $token",
-	  ),
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "GET",
+		CURLOPT_HTTPHEADER => array(
+			"authorization: Bearer $token",
+		),
 	));
 
 	$response = curl_exec($curl);
@@ -65,30 +68,32 @@ function methodGet($method,$token){
 	curl_close($curl);
 
 	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
+		echo "cURL Error #:" . $err;
+		exit;
 	} else {
-	  return $response;
+		return $response;
 	}
 }
 
 
-function methodPatch($method,$header,$parameters){
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
-	
+function methodPatch($method, $header, $parameters)
+{
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
+
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 30,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "PATCH",
-	  CURLOPT_POSTFIELDS => $parameters,
-	  CURLOPT_HTTPHEADER => $header,
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "PATCH",
+		CURLOPT_POSTFIELDS => $parameters,
+		CURLOPT_HTTPHEADER => $header,
 	));
 
 	$response = curl_exec($curl);
@@ -97,27 +102,29 @@ function methodPatch($method,$header,$parameters){
 	curl_close($curl);
 
 	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
+		echo "cURL Error #:" . $err;
+		exit;
 	} else {
-	  return $response;
+		return $response;
 	}
 }
 
-function methodDelete($method,$header){
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
+function methodDelete($method, $header)
+{
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 30,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "DELETE",
-	  CURLOPT_HTTPHEADER => $header,
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "DELETE",
+		CURLOPT_HTTPHEADER => $header,
 	));
 
 	$response = curl_exec($curl);
@@ -126,65 +133,33 @@ function methodDelete($method,$header){
 	curl_close($curl);
 
 	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
+		echo "cURL Error #:" . $err;
+		exit;
 	} else {
-	  return $response;
-	}
-
-}
-
-
-function methodPut($method,$header,$parameters){
-	
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
-	
-	$curl = curl_init();
-
-	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 3000,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "PUT",
-	  CURLOPT_POSTFIELDS => $parameters,
-	  CURLOPT_HTTPHEADER => $header,
-	));
-
-	$response = curl_exec($curl);
-	$err = curl_error($curl);
-
-	curl_close($curl);
-
-	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
-	} else {
-	  return $response;
+		return $response;
 	}
 }
 
 
+function methodPut($method, $header, $parameters)
+{
 
-function methodGetwithparm($method,$header,$parameters){
-	
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
+
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 3000,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "GET",
-	  CURLOPT_POSTFIELDS => $parameters,
-	  CURLOPT_HTTPHEADER => $header,
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 3000,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "PUT",
+		CURLOPT_POSTFIELDS => $parameters,
+		CURLOPT_HTTPHEADER => $header,
 	));
 
 	$response = curl_exec($curl);
@@ -193,34 +168,71 @@ function methodGetwithparm($method,$header,$parameters){
 	curl_close($curl);
 
 	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
+		echo "cURL Error #:" . $err;
+		exit;
 	} else {
-	  return $response;
+		return $response;
 	}
 }
 
 
 
+function methodGetwithparm($method, $header, $parameters)
+{
+
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 3000,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "GET",
+		CURLOPT_POSTFIELDS => $parameters,
+		CURLOPT_HTTPHEADER => $header,
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+	if ($err) {
+		echo "cURL Error #:" . $err;
+		exit;
+	} else {
+		return $response;
+	}
+}
 
 
-function methodDeletewithparm($method,$header,$parameters){
-	$port = "7081";
-	$base_url = "http://54.85.10.92/";
-	
+
+
+
+function methodDeletewithparm($method, $header, $parameters)
+{
+	$port = "";
+	$base_url = "https://api.humlocal.co/";
+
 
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-	  CURLOPT_PORT => $port,
-	  CURLOPT_URL => $base_url.$method,
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 3000,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "DELETE",
-	   CURLOPT_POSTFIELDS => $parameters,
-	  CURLOPT_HTTPHEADER => $header,
+		CURLOPT_PORT => $port,
+		CURLOPT_URL => $base_url . $method,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 3000,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "DELETE",
+		CURLOPT_POSTFIELDS => $parameters,
+		CURLOPT_HTTPHEADER => $header,
 	));
 
 	$response = curl_exec($curl);
@@ -230,8 +242,9 @@ function methodDeletewithparm($method,$header,$parameters){
 	curl_close($curl);
 
 	if ($err) {
-	  echo "cURL Error #:" . $err;exit;
+		echo "cURL Error #:" . $err;
+		exit;
 	} else {
-	  return $response;
+		return $response;
 	}
 }
