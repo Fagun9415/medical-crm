@@ -1229,7 +1229,7 @@ class Patient  extends CI_Controller {
 				$header = ["authorization: Bearer " . $token];
 				$result = methodPost('api/doctors/createEncounter', $header, $final_data);
 				$result_array = json_decode($result);
-				print_r($result_array);
+				/*print_r($result_array);*/
 
 	        $error = $result_array->error;
 	        $message = $result_array->message;

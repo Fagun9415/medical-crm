@@ -68,7 +68,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h5 class="mb-1">Encounter Date</h5>
                                 <div class="form-group form-focus focused">
-                                    <input type="date" class="form-control floating" name="encounterDate">
+                                    <input type="date" class="form-control floating" name="encounterDate" required>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
